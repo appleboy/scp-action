@@ -54,10 +54,11 @@ action "Add secret in args" {
   }
   secrets = [
     "HOST",
+    "TEST_USERNAME",
     "KEY",
   ]
   args = [
-    "--username", "$USERNAME",
+    "--username", "$TEST_USERNAME",
     "--source", "tests/a.txt",
     "--source", "tests/b.txt",
   ]
