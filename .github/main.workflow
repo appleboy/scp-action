@@ -3,6 +3,7 @@ workflow "Copy File Via SSH" {
   resolves = [
     "Copy file via ssh password",
     "Copy file via ssh key",
+    "Add source in command",
   ]
 }
 
@@ -30,4 +31,17 @@ action "Copy file via ssh key" {
     "USERNAME",
     "KEY",
   ]
+}
+
+action "Add source in command" {
+  uses = "appleboy/scp-action@master"
+  env = {
+    TARGET = "/home/actions/test1234"
+  }
+  secrets = [
+    "HOST",
+    "USERNAME",
+    "KEY",
+  ]
+  args = ["--source", "tests/a.txt", "--source", "tests/b.txt"]
 }
