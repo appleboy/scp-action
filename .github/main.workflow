@@ -1,4 +1,4 @@
-workflow "Send Notification" {
+workflow "Copy File Via SSH" {
   on = "push"
   resolves = [
     "Copy multiple file",
