@@ -1,4 +1,4 @@
-FROM appleboy/drone-scp
+FROM appleboy/drone-scp:linux-amd64
 
 # Github labels
 LABEL "com.github.actions.name"="SCP"
