@@ -1,11 +1,12 @@
 workflow "Copy File Via SSH" {
   on = "push"
   resolves = [
-    "Copy multiple file",
+    "Copy file via ssh password",
+    "Copy file via ssh key",
   ]
 }
 
-action "Copy multiple file" {
+action "Copy file via ssh password" {
   uses = "appleboy/scp-action@master"
   env = {
     SOURCE = "tests/a.txt,tests/b.txt"
@@ -15,5 +16,18 @@ action "Copy multiple file" {
     "HOST",
     "USERNAME",
     "PASSWORD",
+  ]
+}
+
+action "Copy file via ssh key" {
+  uses = "appleboy/scp-action@master"
+  env = {
+    SOURCE = "tests/a.txt,tests/b.txt"
+    TARGET = "/home/actions/test"
+  }
+  secrets = [
+    "HOST",
+    "USERNAME",
+    "KEY",
   ]
 }
