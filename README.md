@@ -2,7 +2,7 @@
 
 [GitHub Action](https://developer.github.com/actions/) for copying files and artifacts via SSH.
 
-<img src="./images/facebook-message.png">
+<img src="./images/copy-multiple-file.png">
 
 ## Usage
 
