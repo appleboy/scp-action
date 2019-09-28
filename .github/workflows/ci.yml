@@ -7,6 +7,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
 
+    - uses: actions/checkout@master
     - name: copy file via ssh password
       uses: appleboy/scp-action@master
       env:
