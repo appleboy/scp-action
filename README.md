@@ -4,6 +4,8 @@
 
 ![ssh key](./images/copy-multiple-file.png)
 
+[![Actions Status](https://github.com/appleboy/scp-action/workflows/scp%20files/badge.svg)](https://github.com/appleboy/scp-action/actions)
+
 ## Usage
 
 copy files and artifacts via SSH as blow.
