@@ -30,8 +30,8 @@ see the [action.yml](./action.yml) file for more detail imformation.
 * port - scp remote port
 * username - scp username
 * password - scp password
-* timeout - timeout for ssh to remote host
-* command_timeout - timeout for scp command
+* timeout - timeout for ssh to remote host, default is `30s`
+* command_timeout - timeout for scp command, default is `1m`
 * key - content of ssh private key. ex raw content of ~/.ssh/id_rsa
 * key_path - path of ssh private key
 * target - target path on the server
