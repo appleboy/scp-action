@@ -1,0 +1,33 @@
+name: 'SCP Command to Transfer Files'
+description: 'How to Use SCP Command to Transfer Files/Folders in Linux'
+author: 'Bo-Yi Wu'
+inputs:
+  host:
+    description: 'scp remote host'
+  port:
+    description: 'scp remote port'
+  username:
+    description: 'scp username'
+  password:
+    description: 'scp password'
+  timeout:
+    description: 'timeout for ssh to remote host'
+  command_timeout:
+    description: 'timeout for scp command'
+  key:
+    description: 'content of ssh private key. ex raw content of ~/.ssh/id_rsa'
+  key_path:
+    description: 'path of ssh private key'
+  target:
+    description: 'Target path on the server'
+  source:
+    description: 'scp file list'
+  rm:
+    description: 'remove target folder before upload data'
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+
+branding:
+  icon: 'copy'
+  color: 'gray-dark'
