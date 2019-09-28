@@ -19,7 +19,7 @@ inputs:
   key_path:
     description: 'path of ssh private key'
   target:
-    description: 'Target path on the server'
+    description: 'target path on the server'
   source:
     description: 'scp file list'
   rm:
