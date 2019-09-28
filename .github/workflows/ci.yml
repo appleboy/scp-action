@@ -6,7 +6,6 @@ jobs:
     name: Build
     runs-on: ubuntu-latest
     steps:
-
     - uses: actions/checkout@master
     - name: copy file via ssh password
       uses: appleboy/scp-action@master
@@ -14,6 +13,7 @@ jobs:
         HOST: ${{ secrets.HOST }}
         USERNAME: ${{ secrets.USERNAME }}
         PASSWORD: ${{ secrets.PASSWORD }}
+        PORT: ${{ secrets.PORT }}
       with:
         source: "tests/a.txt,tests/b.txt"
         target: "/home/actions/test"
