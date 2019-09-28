@@ -12,8 +12,10 @@ inputs:
     description: 'scp password'
   timeout:
     description: 'timeout for ssh to remote host'
+    default: "30s"
   command_timeout:
     description: 'timeout for scp command'
+    default: "1m"
   key:
     description: 'content of ssh private key. ex raw content of ~/.ssh/id_rsa'
   key_path:
