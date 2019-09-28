@@ -29,6 +29,11 @@ inputs:
   strip_components:
     description: 'remove the specified number of leading path elements'
     default: 0
+  overwrite:
+    description: 'use `--overwrite` flag with tar'
+    default: false
+  tar_tmp_path:
+    description: 'temporary path for tar file on the dest host'
 runs:
   using: 'docker'
   image: 'Dockerfile'

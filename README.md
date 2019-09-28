@@ -38,6 +38,8 @@ see the [action.yml](./action.yml) file for more detail imformation.
 * source - scp file list
 * rm - remove target folder before upload data
 * strip_components - remove the specified number of leading path elements.
+* overwrite - use `--overwrite` flag with tar
+* tar_tmp_path - temporary path for tar file on the dest host
 
 ### Example
 
