@@ -1,65 +1,18 @@
-workflow "Copy File Via SSH" {
-  on = "push"
-  resolves = [
-    "Copy file via ssh password",
-    "Copy file via ssh key",
-    "Add source in args",
-    "Add secret in args",
-  ]
-}
+name: scp files
+on: [push]
+jobs:
 
-action "Copy file via ssh password" {
-  uses = "appleboy/scp-action@master"
-  env = {
-    SOURCE = "tests/a.txt,tests/b.txt"
-    TARGET = "/home/actions/test"
-  }
-  secrets = [
-    "HOST",
-    "USERNAME",
-    "PASSWORD",
-  ]
-}
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
 
-action "Copy file via ssh key" {
-  uses = "appleboy/scp-action@master"
-  env = {
-    SOURCE = "tests/a.txt,tests/b.txt"
-    TARGET = "/home/actions/test"
-  }
-  secrets = [
-    "HOST",
-    "USERNAME",
-    "KEY",
-  ]
-}
-
-action "Add source in args" {
-  uses = "appleboy/scp-action@master"
-  env = {
-    TARGET = "/home/actions/test1234"
-  }
-  secrets = [
-    "HOST",
-    "USERNAME",
-    "KEY",
-  ]
-  args = ["--source", "tests/a.txt", "--source", "tests/b.txt"]
-}
-
-action "Add secret in args" {
-  uses = "appleboy/scp-action@master"
-  env = {
-    TARGET = "/home/actions/test1234"
-  }
-  secrets = [
-    "HOST",
-    "TEST_USERNAME",
-    "KEY",
-  ]
-  args = [
-    "--username", "$TEST_USERNAME",
-    "--source", "tests/a.txt",
-    "--source", "tests/b.txt",
-  ]
-}
+    - name: copy file via ssh password
+      uses: appleboy/scp-action@master
+      env:
+        HOST: ${{ secrets.HOST }}
+        USERNAME: ${{ secrets.USERNAME }}
+        PASSWORD: ${{ secrets.PASSWORD }}
+      with:
+        source: "tests/a.txt,tests/b.txt"
+        target: "/home/actions/test"
