@@ -26,6 +26,7 @@ inputs:
     description: 'remove target folder before upload data'
   strip_components:
     description: 'remove the specified number of leading path elements'
+    default: 0
 runs:
   using: 'docker'
   image: 'Dockerfile'
