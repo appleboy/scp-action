@@ -37,6 +37,7 @@ see the [action.yml](./action.yml) file for more detail imformation.
 * target - target path on the server
 * source - scp file list
 * rm - remove target folder before upload data
+* strip_components - remove the specified number of leading path elements.
 
 ### Example
 
@@ -97,4 +98,36 @@ Example configuration for multiple server
     port: 22
     source: "tests/a.txt,tests/b.txt"
     target: "test"
+```
+
+remove the specified number of leading path elements
+
+```yaml
+- name: remove the specified number of leading path elements
+  uses: appleboy/scp-action@master
+  with:
+    host: ${{ secrets.HOST }}
+    username: ${{ secrets.USERNAME }}
+    key: ${{ secrets.KEY }}
+    port: ${{ secrets.PORT }}
+    source: "tests/a.txt,tests/b.txt"
+    target: "foobar"
+    strip_components: 1
+```
+
+old target structure:
+
+```sh
+foobar
+  └── tests
+    ├── a.txt
+    └── b.txt
+```
+
+new target structure:
+
+```sh
+foobar
+  ├── a.txt
+  └── b.txt
 ```

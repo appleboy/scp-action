@@ -26,3 +26,14 @@ jobs:
         port: ${{ secrets.PORT }}
         source: "tests/a.txt,tests/b.txt"
         target: "test"
+
+    - name: remove the specified number of leading path elements
+      uses: appleboy/scp-action@master
+      with:
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USERNAME }}
+        key: ${{ secrets.KEY }}
+        port: ${{ secrets.PORT }}
+        source: "tests/a.txt,tests/b.txt"
+        target: "foobar"
+        strip_components: 1
