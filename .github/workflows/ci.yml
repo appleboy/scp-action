@@ -16,6 +16,6 @@ jobs:
         PORT: ${{ secrets.PORT }}
       with:
         source: "tests/a.txt,tests/b.txt"
-        target: "/home/actions/test"
+        target: "/home/deploy/test"
         timeout: 30s
         command_timeout: 30s
