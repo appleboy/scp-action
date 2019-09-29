@@ -11,15 +11,24 @@
 copy files and artifacts via SSH as blow.
 
 ```yaml
-- name: copy file via ssh password
-  uses: appleboy/scp-action@master
-  with:
-    host: ${{ secrets.HOST }}
-    username: ${{ secrets.USERNAME }}
-    password: ${{ secrets.PASSWORD }}
-    port: ${{ secrets.PORT }}
-    source: "tests/a.txt,tests/b.txt"
-    target: "test"
+name: scp files
+on: [push]
+jobs:
+
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@master
+    - name: copy file via ssh password
+      uses: appleboy/scp-action@master
+      with:
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USERNAME }}
+        password: ${{ secrets.PASSWORD }}
+        port: ${{ secrets.PORT }}
+        source: "tests/a.txt,tests/b.txt"
+        target: "test"
 ```
 
 ## Input variables
