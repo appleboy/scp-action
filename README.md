@@ -99,7 +99,6 @@ Example configuration for ignore list:
 Example configuration for multiple server
 
 ```diff
-- name: copy file via ssh password
   uses: appleboy/scp-action@master
   with:
 -   host: "example.com"
