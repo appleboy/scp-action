@@ -1,6 +1,6 @@
 # 🚀 SCP for GitHub Actions
 
-[GitHub Action](https://developer.github.com/actions/) for copying files and artifacts via SSH.
+[GitHub Action](https://github.com/features/actions) for copying files and artifacts via SSH.
 
 ![ssh key](./images/copy-multiple-file.png)
 
