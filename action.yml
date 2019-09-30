@@ -6,6 +6,7 @@ inputs:
     description: 'scp remote host'
   port:
     description: 'scp remote port'
+    default: 22
   username:
     description: 'scp username'
   password:
