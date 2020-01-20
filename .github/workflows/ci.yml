@@ -37,3 +37,14 @@ jobs:
         source: "tests/a.txt,tests/b.txt"
         target: "foobar"
         strip_components: 1
+
+    - name: ssh key with passphrase
+      uses: appleboy/scp-action@master
+      with:
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USERNAME }}
+        key: ${{ secrets.SSH2 }}
+        passphrase: ${{ secrets.PASSPHRASE }}
+        port: ${{ secrets.PORT }}
+        source: "tests/a.txt,tests/b.txt"
+        target: "test"
