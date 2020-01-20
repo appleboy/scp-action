@@ -39,6 +39,7 @@ see the [action.yml](./action.yml) file for more detail imformation.
 * port - scp remote port, default is `22`
 * username - scp username
 * password - scp password
+* passphrase - the passphrase is usually to encrypt the private key
 * timeout - timeout for ssh to remote host, default is `30s`
 * command_timeout - timeout for scp command, default is `10m`
 * key - content of ssh private key. ex raw content of ~/.ssh/id_rsa
@@ -140,4 +141,19 @@ new target structure:
 foobar
   ├── a.txt
   └── b.txt
+```
+
+Protecting a Private Key. The purpose of the passphrase is usually to encrypt the private key. This makes the key file by itself useless to an attacker. It is not uncommon for files to leak from backups or decommissioned hardware, and hackers commonly exfiltrate files from compromised systems.
+
+```diff
+  - name: ssh key with passphrase
+    uses: appleboy/scp-action@master
+    with:
+      host: ${{ secrets.HOST }}
+      username: ${{ secrets.USERNAME }}
+      key: ${{ secrets.SSH2 }}
++     passphrase: ${{ secrets.PASSPHRASE }}
+      port: ${{ secrets.PORT }}
+      source: "tests/a.txt,tests/b.txt"
+      target: "test"
 ```

@@ -21,6 +21,8 @@ inputs:
     description: 'content of ssh private key. ex raw content of ~/.ssh/id_rsa'
   key_path:
     description: 'path of ssh private key'
+  passphrase:
+    description: 'ssh key passphrase'
   target:
     description: 'target path on the server'
   source:
