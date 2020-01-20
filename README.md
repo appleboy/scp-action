@@ -51,6 +51,17 @@ see the [action.yml](./action.yml) file for more detail imformation.
 * overwrite - use `--overwrite` flag with tar
 * tar_tmp_path - temporary path for tar file on the dest host
 
+SSH Proxy Setting:
+
+* proxy_host - proxy host
+* proxy_port - proxy port, default is `22`
+* proxy_username - proxy username
+* proxy_password - proxy password
+* proxy_passphrase - the passphrase is usually to encrypt the private key
+* proxy_timeout - timeout for ssh to proxy host, default is `30s`
+* proxy_key - content of ssh proxy private key.
+* proxy_key_path - path of ssh proxy private key
+
 ### Example
 
 Copy file via ssh password
