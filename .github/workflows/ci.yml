@@ -6,9 +6,11 @@ jobs:
     name: Build
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@master
+    - name: checkout
+      uses: actions/checkout@v1
+
     - name: copy file via ssh password
-      uses: appleboy/scp-action@master
+      uses: ./
       with:
         host: ${{ secrets.HOST }}
         username: ${{ secrets.USERNAME }}
@@ -18,7 +20,7 @@ jobs:
         target: "test"
 
     - name: copy file via ssh key
-      uses: appleboy/scp-action@master
+      uses: ./
       with:
         host: ${{ secrets.HOST }}
         username: ${{ secrets.USERNAME }}
@@ -28,7 +30,7 @@ jobs:
         target: "test"
 
     - name: remove the specified number of leading path elements
-      uses: appleboy/scp-action@master
+      uses: ./
       with:
         host: ${{ secrets.HOST }}
         username: ${{ secrets.USERNAME }}
@@ -39,7 +41,7 @@ jobs:
         strip_components: 1
 
     - name: ssh key with passphrase
-      uses: appleboy/scp-action@master
+      uses: ./
       with:
         host: ${{ secrets.HOST }}
         username: ${{ secrets.USERNAME }}
