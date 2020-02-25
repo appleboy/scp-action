@@ -46,7 +46,7 @@ see the [action.yml](./action.yml) file for more detail imformation.
 * key_path - path of ssh private key
 * target - target path on the server
 * source - scp file list
-* rm - remove target folder before upload data
+* rm - remove target folder before upload data, default is `false`
 * strip_components - remove the specified number of leading path elements.
 * overwrite - use `--overwrite` flag with tar
 * tar_tmp_path - temporary path for tar file on the dest host
