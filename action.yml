@@ -29,6 +29,7 @@ inputs:
     description: 'scp file list'
   rm:
     description: 'remove target folder before upload data'
+    default: false
   strip_components:
     description: 'remove the specified number of leading path elements'
     default: 0
