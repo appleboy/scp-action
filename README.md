@@ -83,12 +83,11 @@ Copy file via ssh key
 ```yaml
 - name: copy file via ssh key
   uses: appleboy/scp-action@master
-  env:
-    HOST: ${{ secrets.HOST }}
-    USERNAME: ${{ secrets.USERNAME }}
-    PORT: ${{ secrets.PORT }}
-    KEY: ${{ secrets.KEY }}
   with:
+    host: ${{ secrets.HOST }}
+    username: ${{ secrets.USERNAME }}
+    port: ${{ secrets.PORT }}
+    key: ${{ secrets.KEY }}
     source: "tests/a.txt,tests/b.txt"
     target: "test"
 ```
@@ -98,12 +97,11 @@ Example configuration for ignore list:
 ```yaml
 - name: copy file via ssh key
   uses: appleboy/scp-action@master
-  env:
-    HOST: ${{ secrets.HOST }}
-    USERNAME: ${{ secrets.USERNAME }}
-    PORT: ${{ secrets.PORT }}
-    KEY: ${{ secrets.KEY }}
   with:
+    host: ${{ secrets.HOST }}
+    username: ${{ secrets.USERNAME }}
+    port: ${{ secrets.PORT }}
+    key: ${{ secrets.KEY }}
     source: "tests/*.txt,!tests/a.txt"
     target: "test"
 ```
