@@ -6,6 +6,8 @@
 
 [![Actions Status](https://github.com/appleboy/scp-action/workflows/scp%20files/badge.svg)](https://github.com/appleboy/scp-action/actions)
 
+**Importment**: Only support **Linux** container.
+
 ## Usage
 
 copy files and artifacts via SSH as blow.
