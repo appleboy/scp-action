@@ -50,3 +50,14 @@ jobs:
         port: ${{ secrets.PORT }}
         source: "tests/a.txt,tests/b.txt"
         target: "test"
+
+    - name: empty archive
+      uses: ./
+      with:
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USERNAME }}
+        key: ${{ secrets.SSH2 }}
+        passphrase: ${{ secrets.PASSPHRASE }}
+        port: ${{ secrets.PORT }}
+        source: "tests/aaaaa.txt"
+        target: "test"
