@@ -30,6 +30,9 @@ inputs:
   rm:
     description: 'remove target folder before upload data'
     default: false
+  debug:
+    description: 'enable debug message'
+    default: false
   strip_components:
     description: 'remove the specified number of leading path elements'
     default: 0
