@@ -59,5 +59,6 @@ jobs:
         key: ${{ secrets.SSH2 }}
         passphrase: ${{ secrets.PASSPHRASE }}
         port: ${{ secrets.PORT }}
+        debug: true
         source: "tests/aaaaa.txt"
         target: "test"
