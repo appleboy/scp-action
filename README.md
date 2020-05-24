@@ -53,6 +53,7 @@ see the [action.yml](./action.yml) file for more detail imformation.
 * strip_components - remove the specified number of leading path elements.
 * overwrite - use `--overwrite` flag with tar
 * tar_tmp_path - temporary path for tar file on the dest host
+* use_insecure_cipher - include more ciphers with use_insecure_cipher (see [#15](https://github.com/appleboy/scp-action/issues/15))
 
 SSH Proxy Setting:
 
@@ -65,6 +66,7 @@ SSH Proxy Setting:
 * proxy_key - content of ssh proxy private key.
 * proxy_key_path - path of ssh proxy private key
 * proxy_fingerprint - fingerprint SHA256 of the host public key, default is to skip verification
+* proxy_use_insecure_cipher - include more ciphers with use_insecure_cipher (see [#15](https://github.com/appleboy/scp-action/issues/15))
 
 ### Example
 

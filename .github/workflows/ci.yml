@@ -50,3 +50,15 @@ jobs:
         port: ${{ secrets.PORT }}
         source: "tests/a.txt,tests/b.txt"
         target: "test"
+
+    - name: use insecure cipher
+      uses: ./
+      with:
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USERNAME }}
+        key: ${{ secrets.SSH2 }}
+        passphrase: ${{ secrets.PASSPHRASE }}
+        port: ${{ secrets.PORT }}
+        source: "tests/a.txt,tests/b.txt"
+        target: "test"
+        use_insecure_cipher: true
