@@ -25,6 +25,9 @@ inputs:
     description: 'ssh key passphrase'
   fingerprint:
     description: 'fingerprint SHA256 of the host public key, default is to skip verification'
+  use_insecure_cipher:
+    description: 'include more ciphers with use_insecure_cipher'
+    default: false
   target:
     description: 'target path on the server'
   source:
@@ -63,6 +66,9 @@ inputs:
     description: 'path of ssh proxy private key'
   proxy_fingerprint:
     description: 'fingerprint SHA256 of the host public key, default is to skip verification'
+  proxy_use_insecure_cipher:
+    description: 'include more ciphers with use_insecure_cipher'
+    default: false
 runs:
   using: 'docker'
   image: 'Dockerfile'
