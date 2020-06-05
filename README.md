@@ -6,7 +6,7 @@
 
 [![Actions Status](https://github.com/appleboy/scp-action/workflows/scp%20files/badge.svg)](https://github.com/appleboy/scp-action/actions)
 
-**Importment**: Only support **Linux** container.
+**Important**: Only support **Linux** [docker](https://www.docker.com/) container.
 
 ## Usage
 
