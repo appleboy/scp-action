@@ -1,4 +1,4 @@
-FROM appleboy/drone-scp:1.6.1-linux-amd64
+FROM appleboy/drone-scp:linux-amd64
 
 ADD entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
