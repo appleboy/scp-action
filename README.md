@@ -10,7 +10,7 @@
 
 ## Usage
 
-copy files and artifacts via SSH as below.
+Copy files and artifacts via SSH:
 
 ```yaml
 name: scp files
@@ -35,7 +35,7 @@ jobs:
 
 ## Input variables
 
-see the [action.yml](./action.yml) file for more detail imformation.
+See the [action.yml](./action.yml) file for more detail information.
 
 * host - scp remote host
 * port - scp remote port, default is `22`
@@ -70,7 +70,7 @@ SSH Proxy Setting:
 
 ### Example
 
-Copy file via ssh password
+Copy file via a SSH password:
 
 ```yaml
 - name: copy file via ssh password
@@ -84,7 +84,7 @@ Copy file via ssh password
     target: "test"
 ```
 
-Copy file via ssh key
+Copy file via a SSH key:
 
 ```yaml
 - name: copy file via ssh key
@@ -112,7 +112,7 @@ Example configuration for ignore list:
     target: "test"
 ```
 
-Example configuration for multiple server
+Example configuration for multiple servers:
 
 ```diff
   uses: appleboy/scp-action@master
@@ -126,7 +126,7 @@ Example configuration for multiple server
     target: "test"
 ```
 
-remove the specified number of leading path elements
+Remove the specified number of leading path elements:
 
 ```yaml
 - name: remove the specified number of leading path elements
@@ -141,7 +141,7 @@ remove the specified number of leading path elements
     strip_components: 1
 ```
 
-old target structure:
+Old target structure:
 
 ```sh
 foobar
@@ -150,7 +150,7 @@ foobar
     └── b.txt
 ```
 
-new target structure:
+New target structure:
 
 ```sh
 foobar
