@@ -129,7 +129,7 @@ Alternatively, `ed25519` keys are accepted by default in OpenSSH. You could use 
 ssh-keygen -t ed25519 -a 200 -C "your_email@example.com"
 ```
 
-### Example
+## Example
 
 Copy file via a SSH password:
 
