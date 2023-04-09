@@ -140,5 +140,5 @@ jobs:
         username: ${{ secrets.USERNAME }}
         key: ${{ secrets.KEY }}
         port: ${{ secrets.PORT }}
-        source: ${{ join(steps.changed-files.outputs.all_changed_files, ',') }}
+        source: "${{ join(steps.changed-files.outputs.all_changed_files, ',') }}"
         target: test
