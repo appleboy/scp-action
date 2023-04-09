@@ -129,7 +129,7 @@ jobs:
         separator: ","
 
     - name: copy file to server
-      uses: appleboy/scp-action@7af00892de6f8397c5c3393cfb3b32ae7f91b94b
+      uses: ./
       with:
         host: ${{ secrets.HOST }}
         username: ${{ secrets.USERNAME }}
