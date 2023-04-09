@@ -63,6 +63,28 @@ jobs:
         target: "test"
         use_insecure_cipher: true
 
+    - name: correct key but wrong password
+      uses: appleboy/scp-action@7af00892de6f8397c5c3393cfb3b32ae7f91b94b
+      with:
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USERNAME }}
+        key: ${{ secrets.KEY }}
+        password: abcdefg
+        port: ${{ secrets.PORT }}
+        source: "tests/a.txt,tests/b.txt"
+        target: "test"
+
+    - name: correct password but wrong key
+      uses: appleboy/scp-action@7af00892de6f8397c5c3393cfb3b32ae7f91b94b
+      with:
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USERNAME }}
+        key: abcdefg
+        password: ${{ secrets.PASSWORD }}
+        port: ${{ secrets.PORT }}
+        source: "tests/a.txt,tests/b.txt"
+        target: "test"
+
   deploy:
     name: deploy artifact
     runs-on: ubuntu-latest
