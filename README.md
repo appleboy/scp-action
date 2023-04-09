@@ -49,10 +49,10 @@ See the [action.yml](./action.yml) file for more detail information.
 * source - scp file list
 * rm - remove target folder before upload data, default is `false`
 * strip_components - remove the specified number of leading path elements.
-* overwrite - use `--overwrite` flag with tar
+* overwrite - use `--overwrite` flag with tar, overwrite existing files when extracting
 * tar_tmp_path - temporary path for tar file on the dest host
 * tar_exec - path to tar executable on the dest host. default is `tar`
-* tar_dereference - use `--dereference` flag with tar
+* tar_dereference - use `--dereference` flag with tar, follow symlinks; archive and dump the files they point to
 * use_insecure_cipher - include more ciphers with use_insecure_cipher (see [#15](https://github.com/appleboy/scp-action/issues/15))
 
 SSH Proxy Setting:
