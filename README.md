@@ -189,6 +189,20 @@ Example configuration for multiple servers:
     target: "test"
 ```
 
+Example configuration for exclude custom files:
+
+```yaml
+  uses: appleboy/scp-action@master
+  with:
+    host: "example.com"
+    username: foo
+    password: bar
+    port: 22
+-   source: "tests/*.txt"
++   source: "tests/*.txt,!tests/a.txt,!tests/b.txt"
+    target: "test"
+```
+
 Remove the specified number of leading path elements:
 
 ```yaml
