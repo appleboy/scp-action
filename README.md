@@ -28,7 +28,7 @@ jobs:
         password: ${{ secrets.PASSWORD }}
         port: ${{ secrets.PORT }}
         source: "tests/a.txt,tests/b.txt"
-        target: "test"
+        target: your_server_target_folder_path
 ```
 
 ## Input variables
@@ -144,7 +144,7 @@ Copy file via a SSH password:
     password: bar
     port: 22
     source: "tests/a.txt,tests/b.txt"
-    target: "test"
+    target: your_server_target_folder_path
 ```
 
 Copy file via a SSH key:
@@ -158,7 +158,7 @@ Copy file via a SSH key:
     port: ${{ secrets.PORT }}
     key: ${{ secrets.KEY }}
     source: "tests/a.txt,tests/b.txt"
-    target: "test"
+    target: your_server_target_folder_path
 ```
 
 Example configuration for ignore list:
@@ -172,7 +172,7 @@ Example configuration for ignore list:
     port: ${{ secrets.PORT }}
     key: ${{ secrets.KEY }}
     source: "tests/*.txt,!tests/a.txt"
-    target: "test"
+    target: your_server_target_folder_path
 ```
 
 Example configuration for multiple servers:
@@ -186,7 +186,7 @@ Example configuration for multiple servers:
     password: bar
     port: 22
     source: "tests/a.txt,tests/b.txt"
-    target: "test"
+    target: your_server_target_folder_path
 ```
 
 Example configuration for exclude custom files:
@@ -200,7 +200,7 @@ Example configuration for exclude custom files:
     port: 22
 -   source: "tests/*.txt"
 +   source: "tests/*.txt,!tests/a.txt,!tests/b.txt"
-    target: "test"
+    target: your_server_target_folder_path
 ```
 
 Upload artifact files to remote server:
@@ -233,7 +233,7 @@ Upload artifact files to remote server:
         key: ${{ secrets.KEY }}
         port: ${{ secrets.PORT }}
         source: distfiles/*
-        target: test
+        target: your_server_target_folder_path
 ```
 
 Remove the specified number of leading path elements:
@@ -247,7 +247,7 @@ Remove the specified number of leading path elements:
     key: ${{ secrets.KEY }}
     port: ${{ secrets.PORT }}
     source: "tests/a.txt,tests/b.txt"
-    target: "foobar"
+    target: your_server_target_folder_path
     strip_components: 1
 ```
 
@@ -276,7 +276,7 @@ Only copy files that are newer than the corresponding destination files:
         key: ${{ secrets.KEY }}
         port: ${{ secrets.PORT }}
         source: ${{ steps.changed-files.outputs.all_changed_files }}
-        target: test
+        target: your_server_target_folder_path
 ```
 
 Old target structure:
@@ -308,5 +308,5 @@ Protecting a Private Key. The purpose of the passphrase is usually to encrypt th
 +     passphrase: ${{ secrets.PASSPHRASE }}
       port: ${{ secrets.PORT }}
       source: "tests/a.txt,tests/b.txt"
-      target: "test"
+      target: your_server_target_folder_path
 ```
