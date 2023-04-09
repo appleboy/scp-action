@@ -51,6 +51,7 @@ See the [action.yml](./action.yml) file for more detail information.
 * strip_components - remove the specified number of leading path elements.
 * overwrite - use `--overwrite` flag with tar
 * tar_tmp_path - temporary path for tar file on the dest host
+* tar_exec - path to tar executable on the dest host. default is `tar`
 * use_insecure_cipher - include more ciphers with use_insecure_cipher (see [#15](https://github.com/appleboy/scp-action/issues/15))
 
 SSH Proxy Setting:
