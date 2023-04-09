@@ -251,6 +251,34 @@ Remove the specified number of leading path elements:
     strip_components: 1
 ```
 
+Only copy files that are newer than the corresponding destination files:
+
+```yaml
+  changes:
+    name: test changed-files
+    runs-on: ubuntu-latest
+    steps:
+    - name: checkout
+      uses: actions/checkout@v3
+
+    - name: Get changed files
+      id: changed-files
+      uses: tj-actions/changed-files@v35
+      with:
+        since_last_remote_commit: true
+        separator: ","
+
+    - name: copy file to server
+      uses: appleboy/scp-action@master
+      with:
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USERNAME }}
+        key: ${{ secrets.KEY }}
+        port: ${{ secrets.PORT }}
+        source: ${{ steps.changed-files.outputs.all_changed_files }}
+        target: test
+```
+
 Old target structure:
 
 ```sh
