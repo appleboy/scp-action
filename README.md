@@ -266,21 +266,16 @@ Only copy files that are newer than the corresponding destination files:
       uses: tj-actions/changed-files@v35
       with:
         since_last_remote_commit: true
-
-    - name: List all changed files
-      run: |
-        for file in ${{ steps.changed-files.outputs.all_changed_files }}; do
-          echo "$file was changed"
-        done
+        separator: ","
 
     - name: copy file to server
-      uses: ./
+      uses: appleboy/scp-action@master
       with:
         host: ${{ secrets.HOST }}
         username: ${{ secrets.USERNAME }}
         key: ${{ secrets.KEY }}
         port: ${{ secrets.PORT }}
-        source: ${{ join(steps.changed-files.outputs.all_changed_files, ',') }}
+        source: ${{ steps.changed-files.outputs.all_changed_files }}
         target: test
 ```
 
