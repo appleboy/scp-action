@@ -29,7 +29,7 @@ inputs:
     description: 'include more ciphers with use_insecure_cipher'
     default: false
   target:
-    description: 'target path on the server'
+    description: 'target path on the server, must be a directory path.'
   source:
     description: 'scp file list'
   rm:

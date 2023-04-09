@@ -45,8 +45,8 @@ See the [action.yml](./action.yml) file for more detail information.
 * command_timeout - timeout for scp command, default is `10m`
 * key - content of ssh private key. ex raw content of ~/.ssh/id_rsa
 * key_path - path of ssh private key
-* target - target path on the server
-* source - scp file list
+* target - target path on the server, must be a directory (**required**)
+* source - scp file list (**required**)
 * rm - remove target folder before upload data, default is `false`
 * strip_components - remove the specified number of leading path elements.
 * overwrite - use `--overwrite` flag with tar, overwrite existing files when extracting
