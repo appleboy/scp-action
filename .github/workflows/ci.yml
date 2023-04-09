@@ -129,7 +129,7 @@ jobs:
 
     - name: List all changed files
       run: |
-        ${{ join(steps.changed-files.outputs.all_changed_files, ',') }}
+        "${{ join(steps.changed-files.outputs.all_changed_files, ',') }}"
         for file in ${{ steps.changed-files.outputs.all_changed_files }}; do
           echo "$file was changed"
         done
