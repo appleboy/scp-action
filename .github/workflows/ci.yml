@@ -2,8 +2,8 @@ name: scp files
 on: [push]
 jobs:
 
-  build:
-    name: Build
+  testing:
+    name: test scp action
     runs-on: ubuntu-latest
     steps:
     - name: checkout
