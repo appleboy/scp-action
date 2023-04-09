@@ -1,5 +1,3 @@
 d
 foobar
 foobar
-
-foobar

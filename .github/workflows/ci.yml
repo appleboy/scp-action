@@ -126,13 +126,7 @@ jobs:
       uses: tj-actions/changed-files@v35
       with:
         since_last_remote_commit: true
-
-    - name: List all changed files
-      run: |
-        "${{ join(steps.changed-files.outputs.all_changed_files, ',') }}"
-        for file in ${{ steps.changed-files.outputs.all_changed_files }}; do
-          echo "$file was changed"
-        done
+        separator: ","
 
     - name: copy file to server
       uses: appleboy/scp-action@7af00892de6f8397c5c3393cfb3b32ae7f91b94b
@@ -141,5 +135,5 @@ jobs:
         username: ${{ secrets.USERNAME }}
         key: ${{ secrets.KEY }}
         port: ${{ secrets.PORT }}
-        source: "${{ join(steps.changed-files.outputs.all_changed_files, ',') }}"
+        source: ${{ steps.changed-files.outputs.all_changed_files }}
         target: test
