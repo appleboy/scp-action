@@ -46,6 +46,9 @@ inputs:
     default: false
   tar_tmp_path:
     description: 'temporary path for tar file on the dest host'
+  tar_exec:
+    description: 'temporary path for tar file on the dest host'
+    default: 'tar'
   proxy_host:
     description: 'ssh proxy remote host'
   proxy_port:
