@@ -203,6 +203,39 @@ Example configuration for exclude custom files:
     target: "test"
 ```
 
+Upload artifact files to remote server:
+
+```yaml
+  deploy:
+    name: deploy artifact
+    runs-on: ubuntu-latest
+    steps:
+    - name: checkout
+      uses: actions/checkout@v3
+
+    - run: echo hello > world.txt
+
+    - uses: actions/upload-artifact@v3
+      with:
+        name: my-artifact
+        path: world.txt
+
+    - uses: actions/download-artifact@v2
+      with:
+        name: my-artifact
+        path: distfiles
+
+    - name: copy file to server
+      uses: appleboy/scp-action@master
+      with:
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USERNAME }}
+        key: ${{ secrets.KEY }}
+        port: ${{ secrets.PORT }}
+        source: distfiles/*
+        target: test
+```
+
 Remove the specified number of leading path elements:
 
 ```yaml
