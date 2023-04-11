@@ -99,7 +99,7 @@ jobs:
         name: my-artifact
         path: world.txt
 
-    - uses: actions/download-artifact@v2
+    - uses: actions/download-artifact@v3
       with:
         name: my-artifact
         path: distfiles
