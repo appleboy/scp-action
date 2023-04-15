@@ -86,7 +86,7 @@ jobs:
         target: "test"
 
   deploy:
-    name: deploy artifact
+    name: test deploy artifact
     runs-on: ubuntu-latest
     steps:
     - name: checkout
@@ -137,3 +137,20 @@ jobs:
         port: ${{ secrets.PORT }}
         source: ${{ steps.changed-files.outputs.all_changed_files }}
         target: test
+
+  target:
+    name: test target folder
+    runs-on: ubuntu-latest
+    steps:
+    - name: checkout
+      uses: actions/checkout@v3
+
+    - name: copy file to server
+      uses: ./
+      with:
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USERNAME }}
+        key: ${{ secrets.KEY }}
+        port: ${{ secrets.PORT }}
+        source: tests/a.txt,tests/b.txt
+        target: test foobar
