@@ -154,3 +154,20 @@ jobs:
         port: ${{ secrets.PORT }}
         source: tests/a.txt,tests/b.txt
         target: test foobar
+
+  multipleHost:
+    name: test Multiple Host
+    runs-on: ubuntu-latest
+    steps:
+    - name: checkout
+      uses: actions/checkout@v3
+
+    - name: copy file to server
+      uses: ./
+      with:
+        host: ${{ secrets.HOST }}:${{ secrets.PORT }},${{ secrets.HOST }}:${{ secrets.PORT }}
+        username: ${{ secrets.USERNAME }}
+        key: ${{ secrets.KEY }}
+        port: 1024
+        source: tests/a.txt,tests/b.txt
+        target: foobar
