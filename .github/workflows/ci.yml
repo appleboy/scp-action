@@ -153,7 +153,7 @@ jobs:
         key: ${{ secrets.KEY }}
         port: ${{ secrets.PORT }}
         source: tests/a.txt,tests/b.txt
-        target: test foobar
+        target: foobar foobar   1234
 
   multipleHost:
     name: test Multiple Host
