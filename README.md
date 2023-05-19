@@ -19,7 +19,7 @@ jobs:
     name: Build
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v0.1.4
+    - uses: actions/checkout@v3
     - name: copy file via ssh password
       uses: appleboy/scp-action@v0.1.4
       with:
@@ -220,7 +220,7 @@ Upload artifact files to remote server:
         name: my-artifact
         path: world.txt
 
-    - uses: actions/download-artifact@v2
+    - uses: actions/download-artifact@v3
       with:
         name: my-artifact
         path: distfiles
