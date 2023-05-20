@@ -251,6 +251,23 @@ Remove the specified number of leading path elements:
     strip_components: 1
 ```
 
+Old target structure:
+
+```sh
+foobar
+  └── tests
+    ├── a.txt
+    └── b.txt
+```
+
+New target structure:
+
+```sh
+foobar
+  ├── a.txt
+  └── b.txt
+```
+
 Only copy files that are newer than the corresponding destination files:
 
 ```yaml
@@ -277,23 +294,6 @@ Only copy files that are newer than the corresponding destination files:
         port: ${{ secrets.PORT }}
         source: ${{ steps.changed-files.outputs.all_changed_files }}
         target: your_server_target_folder_path
-```
-
-Old target structure:
-
-```sh
-foobar
-  └── tests
-    ├── a.txt
-    └── b.txt
-```
-
-New target structure:
-
-```sh
-foobar
-  ├── a.txt
-  └── b.txt
 ```
 
 Protecting a Private Key. The purpose of the passphrase is usually to encrypt the private key. This makes the key file by itself useless to an attacker. It is not uncommon for files to leak from backups or decommissioned hardware, and hackers commonly exfiltrate files from compromised systems.
