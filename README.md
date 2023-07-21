@@ -310,16 +310,23 @@ Protecting a Private Key. The purpose of the passphrase is usually to encrypt th
       source: "tests/a.txt,tests/b.txt"
       target: your_server_target_folder_path
 ```
+
 When copying files from a Linux runner to a Windows server, you should:
 
-1.  Download git for Windows
-2.  Change the default OpenSSH shell to git bach with the following powershell command:
+1. Download git for Windows
+2. Change the default OpenSSH shell to git bach with the following powershell command.
+3. Set `tar_dereference` and `rm` variable to `true` in the YAML file
+4. Avoid putting the `port` value through a variable
+5. Convert the target path to a Unix path: `/c/path/to/target/`
+
+Change the default OpenSSH shell to git bach with the following powershell command.
+
 ```powershell
 New-ItemProperty -Path "HKLM:\SOFTWARE\OpenSSH" -Name DefaultShell -Value "$env:Programfiles\Git\bin\bash.exe" -PropertyType String -Force
 ```
-3.  Set `tar_dereference` and `rm` variable to `true` in the YAML file
-4.  Avoid putting the `port` value through a variable
-5.  Convert the target path to a Unix path:
+
+Convert the target path to a Unix path: `/c/path/to/target/`
+
 ```diff
   - name: Copy to Windows
       uses: appleboy/scp-action@v0.1.4
@@ -333,4 +340,4 @@ New-ItemProperty -Path "HKLM:\SOFTWARE\OpenSSH" -Name DefaultShell -Value "$env:
 +       target: '/c/path/to/target/'
 +       tar_dereference: true
 +       rm: true
-``` 
+```
