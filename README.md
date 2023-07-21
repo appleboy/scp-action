@@ -319,7 +319,7 @@ New-ItemProperty -Path "HKLM:\SOFTWARE\OpenSSH" -Name DefaultShell -Value "$env:
 ```
 3.  Set `tar_dereference` and `rm` variable to `true` in the YAML file
 4.  Avoid putting the `port` value through a variable
-5.  Convert the target path to a bash path:
+5.  Convert the target path to a Unix path:
 ```diff
   - name: Copy to Windows
       uses: appleboy/scp-action@v0.1.4
@@ -330,7 +330,7 @@ New-ItemProperty -Path "HKLM:\SOFTWARE\OpenSSH" -Name DefaultShell -Value "$env:
         port: 22
         source: 'your_source_path'
 -       target: 'C:\path\to\target'
-+       target: 'C:/path/to/target'
++       target: '/c/path/to/target/'
 +       tar_dereference: true
 +       rm: true
 ``` 
