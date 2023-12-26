@@ -21,7 +21,7 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: copy file via ssh password
-      uses: appleboy/scp-action@v0.1.5
+      uses: appleboy/scp-action@v0.1.6
       with:
         host: ${{ secrets.HOST }}
         username: ${{ secrets.USERNAME }}
@@ -137,7 +137,7 @@ Copy file via a SSH password:
 
 ```yaml
 - name: copy file via ssh password
-  uses: appleboy/scp-action@v0.1.5
+  uses: appleboy/scp-action@v0.1.6
   with:
     host: example.com
     username: foo
@@ -151,7 +151,7 @@ Copy file via a SSH key:
 
 ```yaml
 - name: copy file via ssh key
-  uses: appleboy/scp-action@v0.1.5
+  uses: appleboy/scp-action@v0.1.6
   with:
     host: ${{ secrets.HOST }}
     username: ${{ secrets.USERNAME }}
@@ -165,7 +165,7 @@ Example configuration for ignore list:
 
 ```yaml
 - name: copy file via ssh key
-  uses: appleboy/scp-action@v0.1.5
+  uses: appleboy/scp-action@v0.1.6
   with:
     host: ${{ secrets.HOST }}
     username: ${{ secrets.USERNAME }}
@@ -178,7 +178,7 @@ Example configuration for ignore list:
 Example configuration for multiple servers:
 
 ```diff
-  uses: appleboy/scp-action@v0.1.5
+  uses: appleboy/scp-action@v0.1.6
   with:
 -   host: "example.com"
 +   host: "foo.com,bar.com"
@@ -192,7 +192,7 @@ Example configuration for multiple servers:
 Example configuration for exclude custom files:
 
 ```yaml
-  uses: appleboy/scp-action@v0.1.5
+  uses: appleboy/scp-action@v0.1.6
   with:
     host: "example.com"
     username: foo
@@ -226,7 +226,7 @@ Upload artifact files to remote server:
         path: distfiles
 
     - name: copy file to server
-      uses: appleboy/scp-action@v0.1.5
+      uses: appleboy/scp-action@v0.1.6
       with:
         host: ${{ secrets.HOST }}
         username: ${{ secrets.USERNAME }}
@@ -240,7 +240,7 @@ Remove the specified number of leading path elements:
 
 ```yaml
 - name: remove the specified number of leading path elements
-  uses: appleboy/scp-action@v0.1.5
+  uses: appleboy/scp-action@v0.1.6
   with:
     host: ${{ secrets.HOST }}
     username: ${{ secrets.USERNAME }}
@@ -286,7 +286,7 @@ Only copy files that are newer than the corresponding destination files:
         separator: ","
 
     - name: copy file to server
-      uses: appleboy/scp-action@v0.1.5
+      uses: appleboy/scp-action@v0.1.6
       with:
         host: ${{ secrets.HOST }}
         username: ${{ secrets.USERNAME }}
@@ -300,7 +300,7 @@ Protecting a Private Key. The purpose of the passphrase is usually to encrypt th
 
 ```diff
   - name: ssh key with passphrase
-    uses: appleboy/scp-action@v0.1.5
+    uses: appleboy/scp-action@v0.1.6
     with:
       host: ${{ secrets.HOST }}
       username: ${{ secrets.USERNAME }}
@@ -329,7 +329,7 @@ Convert the target path to a Unix path: `/c/path/to/target/`
 
 ```diff
   - name: Copy to Windows
-      uses: appleboy/scp-action@v0.1.5
+      uses: appleboy/scp-action@v0.1.6
       with:
         host: ${{ secrets.HOST }}
         username: ${{ secrets.USERNAME }}
