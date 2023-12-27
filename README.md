@@ -19,7 +19,7 @@ jobs:
     name: Build
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     - name: copy file via ssh password
       uses: appleboy/scp-action@v0.1.6
       with:
@@ -211,16 +211,16 @@ Upload artifact files to remote server:
     runs-on: ubuntu-latest
     steps:
     - name: checkout
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
 
     - run: echo hello > world.txt
 
-    - uses: actions/upload-artifact@v3
+    - uses: actions/upload-artifact@v4
       with:
         name: my-artifact
         path: world.txt
 
-    - uses: actions/download-artifact@v3
+    - uses: actions/download-artifact@v4
       with:
         name: my-artifact
         path: distfiles
@@ -276,7 +276,7 @@ Only copy files that are newer than the corresponding destination files:
     runs-on: ubuntu-latest
     steps:
     - name: checkout
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
 
     - name: Get changed files
       id: changed-files
