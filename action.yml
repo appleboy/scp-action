@@ -1,84 +1,77 @@
-name: 'SCP Command to Transfer Files'
-description: 'How to Use SCP Command to Transfer Files/Folders in Linux'
-author: 'Bo-Yi Wu'
+name: "SCP Command to Transfer Files"
+description: "How to Use SCP Command to Transfer Files/Folders in Linux"
+author: "Bo-Yi Wu"
 inputs:
   host:
-    description: 'scp remote host'
+    description: "scp remote host"
   port:
-    description: 'scp remote port'
-    default: 22
+    description: "scp remote port"
+    default: "22"
   username:
-    description: 'scp username'
+    description: "scp username"
   password:
-    description: 'scp password'
+    description: "scp password"
   timeout:
-    description: 'timeout for ssh to remote host'
+    description: "timeout for ssh to remote host"
     default: "30s"
   command_timeout:
-    description: 'timeout for scp command'
+    description: "timeout for scp command"
     default: "10m"
   key:
-    description: 'content of ssh private key. ex raw content of ~/.ssh/id_rsa'
+    description: "content of ssh private key. ex raw content of ~/.ssh/id_rsa"
   key_path:
-    description: 'path of ssh private key'
+    description: "path of ssh private key"
   passphrase:
-    description: 'ssh key passphrase'
+    description: "ssh key passphrase"
   fingerprint:
-    description: 'fingerprint SHA256 of the host public key, default is to skip verification'
+    description: "fingerprint SHA256 of the host public key, default is to skip verification"
   use_insecure_cipher:
-    description: 'include more ciphers with use_insecure_cipher'
-    default: false
+    description: "include more ciphers with use_insecure_cipher"
   target:
-    description: 'target path on the server, must be a directory path.'
+    description: "target path on the server, must be a directory path."
   source:
-    description: 'scp file list'
+    description: "scp file list"
   rm:
-    description: 'remove target folder before upload data'
-    default: false
+    description: "remove target folder before upload data"
   debug:
-    description: 'enable debug message'
-    default: false
+    description: "enable debug message"
   strip_components:
-    description: 'remove the specified number of leading path elements'
-    default: 0
+    description: "remove the specified number of leading path elements"
   overwrite:
-    description: 'use --overwrite flag with tar'
-    default: false
+    description: "use --overwrite flag with tar"
   tar_dereference:
-    description: 'use --dereference flag with tar'
-    default: false
+    description: "use --dereference flag with tar"
   tar_tmp_path:
-    description: 'temporary path for tar file on the dest host'
+    description: "temporary path for tar file on the dest host"
   tar_exec:
-    description: 'temporary path for tar file on the dest host'
-    default: 'tar'
+    description: "temporary path for tar file on the dest host"
+    default: "tar"
   proxy_host:
-    description: 'ssh proxy remote host'
+    description: "ssh proxy remote host"
   proxy_port:
-    description: 'ssh proxy remote port'
-    default: 22
+    description: "ssh proxy remote port"
+    default: "22"
   proxy_username:
-    description: 'ssh proxy username'
+    description: "ssh proxy username"
   proxy_password:
-    description: 'ssh proxy password'
+    description: "ssh proxy password"
   proxy_passphrase:
-    description: 'ssh proxy key passphrase'
+    description: "ssh proxy key passphrase"
   proxy_timeout:
-    description: 'timeout for ssh to proxy host'
+    description: "timeout for ssh to proxy host"
     default: "30s"
   proxy_key:
-    description: 'content of ssh proxy private key. ex raw content of ~/.ssh/id_rsa'
+    description: "content of ssh proxy private key. ex raw content of ~/.ssh/id_rsa"
   proxy_key_path:
-    description: 'path of ssh proxy private key'
+    description: "path of ssh proxy private key"
   proxy_fingerprint:
-    description: 'fingerprint SHA256 of the host public key, default is to skip verification'
+    description: "fingerprint SHA256 of the host public key, default is to skip verification"
   proxy_use_insecure_cipher:
-    description: 'include more ciphers with use_insecure_cipher'
-    default: false
+    description: "include more ciphers with use_insecure_cipher"
 runs:
-  using: 'docker'
-  image: 'Dockerfile'
+  using: "docker"
+  image: "Dockerfile"
 
 branding:
-  icon: 'copy'
-  color: 'gray-dark'
+  icon: "copy"
+  color: "gray-dark"
