@@ -40,6 +40,7 @@ See the [action.yml](./action.yml) file for more detail information.
 * username - scp username
 * password - scp password
 * passphrase - the passphrase is usually to encrypt the private key
+* protocol - The IP protocol to use. Valid values are `tcp`. `tcp4` or `tcp6`. Default to `tcp`.
 * fingerprint - fingerprint SHA256 of the host public key, default is to skip verification
 * timeout - timeout for ssh to remote host, default is `30s`
 * command_timeout - timeout for scp command, default is `10m`
@@ -61,6 +62,7 @@ SSH Proxy Setting:
 * proxy_port - proxy port, default is `22`
 * proxy_username - proxy username
 * proxy_password - proxy password
+* proxy_protocol - The IP protocol to use. Valid values are `tcp`. `tcp4` or `tcp6`. Default to `tcp`.
 * proxy_passphrase - the passphrase is usually to encrypt the private key
 * proxy_timeout - timeout for ssh to proxy host, default is `30s`
 * proxy_key - content of ssh proxy private key.
