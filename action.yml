@@ -11,6 +11,9 @@ inputs:
     description: "scp username"
   password:
     description: "scp password"
+  protocol:
+    description: "The IP protocol to use. Valid values are 'tcp'. 'tcp4' or 'tcp6'. Default to tcp."
+    default: "tcp"
   timeout:
     description: "timeout for ssh to remote host"
     default: "30s"
