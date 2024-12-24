@@ -148,6 +148,20 @@ Copy file via a SSH password:
     target: your_server_target_folder_path
 ```
 
+Using the environment variables
+
+```yaml
+- name: copy file via ssh password
+  uses: appleboy/scp-action@v0.1.7
+  with:
+    host: ${{ env.HOST }}
+    username: ${{ env.USERNAME }}
+    password: ${{ secrets.PASSWORD }}
+    port: ${{ env.PORT }}
+    source: "tests/a.txt,tests/b.txt"
+    target: ${{ env.TARGET_PATH }}
+```
+
 Copy file via a SSH key:
 
 ```yaml
