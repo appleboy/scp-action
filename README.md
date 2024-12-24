@@ -14,61 +14,60 @@ Copy files and artifacts via SSH:
 name: scp files
 on: [push]
 jobs:
-
   build:
     name: Build
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
-    - name: copy file via ssh password
-      uses: appleboy/scp-action@v0.1.7
-      with:
-        host: ${{ secrets.HOST }}
-        username: ${{ secrets.USERNAME }}
-        password: ${{ secrets.PASSWORD }}
-        port: ${{ secrets.PORT }}
-        source: "tests/a.txt,tests/b.txt"
-        target: your_server_target_folder_path
+      - uses: actions/checkout@v4
+      - name: copy file via ssh password
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          password: ${{ secrets.PASSWORD }}
+          port: ${{ secrets.PORT }}
+          source: "tests/a.txt,tests/b.txt"
+          target: your_server_target_folder_path
 ```
 
 ## Input variables
 
 See the [action.yml](./action.yml) file for more detail information.
 
-* host - scp remote host
-* port - scp remote port, default is `22`
-* username - scp username
-* password - scp password
-* passphrase - the passphrase is usually to encrypt the private key
-* protocol - The IP protocol to use. Valid values are `tcp`. `tcp4` or `tcp6`. Default to `tcp`.
-* fingerprint - fingerprint SHA256 of the host public key, default is to skip verification
-* timeout - timeout for ssh to remote host, default is `30s`
-* command_timeout - timeout for scp command, default is `10m`
-* key - content of ssh private key. ex raw content of ~/.ssh/id_rsa
-* key_path - path of ssh private key
-* target - target path on the server, must be a directory (**required**)
-* source - scp file list (**required**)
-* rm - remove target folder before upload data, default is `false`
-* strip_components - remove the specified number of leading path elements.
-* overwrite - use `--overwrite` flag with tar, overwrite existing files when extracting
-* tar_tmp_path - temporary path for tar file on the dest host
-* tar_exec - path to tar executable on the dest host. default is `tar`
-* tar_dereference - use `--dereference` flag with tar, follow symlinks; archive and dump the files they point to
-* use_insecure_cipher - include more ciphers with use_insecure_cipher (see [#15](https://github.com/appleboy/scp-action/issues/15))
+- host - scp remote host
+- port - scp remote port, default is `22`
+- username - scp username
+- password - scp password
+- passphrase - the passphrase is usually to encrypt the private key
+- protocol - The IP protocol to use. Valid values are `tcp`. `tcp4` or `tcp6`. Default to `tcp`.
+- fingerprint - fingerprint SHA256 of the host public key, default is to skip verification
+- timeout - timeout for ssh to remote host, default is `30s`
+- command_timeout - timeout for scp command, default is `10m`
+- key - content of ssh private key. ex raw content of ~/.ssh/id_rsa
+- key_path - path of ssh private key
+- target - target path on the server, must be a directory (**required**)
+- source - scp file list (**required**)
+- rm - remove target folder before upload data, default is `false`
+- strip_components - remove the specified number of leading path elements.
+- overwrite - use `--overwrite` flag with tar, overwrite existing files when extracting
+- tar_tmp_path - temporary path for tar file on the dest host
+- tar_exec - path to tar executable on the dest host. default is `tar`
+- tar_dereference - use `--dereference` flag with tar, follow symlinks; archive and dump the files they point to
+- use_insecure_cipher - include more ciphers with use_insecure_cipher (see [#15](https://github.com/appleboy/scp-action/issues/15))
 
 SSH Proxy Setting:
 
-* proxy_host - proxy host
-* proxy_port - proxy port, default is `22`
-* proxy_username - proxy username
-* proxy_password - proxy password
-* proxy_protocol - The IP protocol to use. Valid values are `tcp`. `tcp4` or `tcp6`. Default to `tcp`.
-* proxy_passphrase - the passphrase is usually to encrypt the private key
-* proxy_timeout - timeout for ssh to proxy host, default is `30s`
-* proxy_key - content of ssh proxy private key.
-* proxy_key_path - path of ssh proxy private key
-* proxy_fingerprint - fingerprint SHA256 of the host public key, default is to skip verification
-* proxy_use_insecure_cipher - include more ciphers with use_insecure_cipher (see [#15](https://github.com/appleboy/scp-action/issues/15))
+- proxy_host - proxy host
+- proxy_port - proxy port, default is `22`
+- proxy_username - proxy username
+- proxy_password - proxy password
+- proxy_protocol - The IP protocol to use. Valid values are `tcp`. `tcp4` or `tcp6`. Default to `tcp`.
+- proxy_passphrase - the passphrase is usually to encrypt the private key
+- proxy_timeout - timeout for ssh to proxy host, default is `30s`
+- proxy_key - content of ssh proxy private key.
+- proxy_key_path - path of ssh proxy private key
+- proxy_fingerprint - fingerprint SHA256 of the host public key, default is to skip verification
+- proxy_use_insecure_cipher - include more ciphers with use_insecure_cipher (see [#15](https://github.com/appleboy/scp-action/issues/15))
 
 ## Setting up a SSH Key
 
@@ -108,9 +107,9 @@ See the detail information about [SSH login without password](http://www.linuxpr
 
 **A note** from one of our readers: Depending on your version of SSH you might also have to do the following changes:
 
-* Put the public key in `.ssh/authorized_keys2`
-* Change the permissions of `.ssh` to 700
-* Change the permissions of `.ssh/authorized_keys2` to 640
+- Put the public key in `.ssh/authorized_keys2`
+- Change the permissions of `.ssh` to 700
+- Change the permissions of `.ssh/authorized_keys2` to 640
 
 ### If you are using OpenSSH
 
@@ -208,10 +207,10 @@ Example configuration for exclude custom files:
 Upload artifact files to remote server:
 
 ```yaml
-  deploy:
-    name: deploy artifact
-    runs-on: ubuntu-latest
-    steps:
+deploy:
+  name: deploy artifact
+  runs-on: ubuntu-latest
+  steps:
     - name: checkout
       uses: actions/checkout@v4
 
@@ -273,10 +272,10 @@ foobar
 Only copy files that are newer than the corresponding destination files:
 
 ```yaml
-  changes:
-    name: test changed-files
-    runs-on: ubuntu-latest
-    steps:
+changes:
+  name: test changed-files
+  runs-on: ubuntu-latest
+  steps:
     - name: checkout
       uses: actions/checkout@v4
 
