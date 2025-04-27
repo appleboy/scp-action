@@ -4,7 +4,7 @@
 
 [GitHub Action](https://github.com/features/actions) 用于通过 SSH 复制文件和构建产物。
 
-[![Actions Status](https://github.com/appleboy/scp-action/workflows/scp%20files/badge.svg)](https://github.com/appleboy/scp-action/actions)
+[![lint and test](https://github.com/appleboy/scp-action/actions/workflows/testing.yml/badge.svg)](https://github.com/appleboy/scp-action/actions/workflows/testing.yml)
 
 > **注意：** 仅支持 **Linux** [docker](https://www.docker.com/) 容器。
 
