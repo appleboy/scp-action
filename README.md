@@ -1,5 +1,7 @@
 # 🚀 SCP for GitHub Actions
 
+[繁體中文](README.zh-tw.md) | [简体中文](README.zh-cn.md)
+
 [GitHub Action](https://github.com/features/actions) for copying files and artifacts via SSH.
 
 [![Actions Status](https://github.com/appleboy/scp-action/workflows/scp%20files/badge.svg)](https://github.com/appleboy/scp-action/actions)
