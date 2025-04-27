@@ -4,22 +4,62 @@
 
 [![Actions Status](https://github.com/appleboy/scp-action/workflows/scp%20files/badge.svg)](https://github.com/appleboy/scp-action/actions)
 
-**Important**: Only supports **Linux** [docker](https://www.docker.com/) containers.
+> **Note:** Only supports **Linux** [docker](https://www.docker.com/) containers.
 
-## Usage
+---
 
-Copy files and artifacts via SSH:
+## ✨ Features
+
+- ✅ Copy files and artifacts to one or multiple remote servers via SSH
+- ✅ Supports both SSH key and password authentication
+- ✅ Full SSH Proxy (jump host) support
+- ✅ Handles Linux ↔ Windows path conversion
+- ✅ Integrates with GitHub Artifacts workflow
+- ✅ Incremental and differential file transfer
+- ✅ Rich configuration options for advanced use cases
+
+---
+
+## 📦 Table of Contents
+
+- [🚀 SCP for GitHub Actions](#-scp-for-github-actions)
+  - [✨ Features](#-features)
+  - [📦 Table of Contents](#-table-of-contents)
+  - [🚀 Quick Start](#-quick-start)
+  - [⚙️ Configuration](#️-configuration)
+    - [🔌 Connection Settings](#-connection-settings)
+    - [📁 File Transfer Settings](#-file-transfer-settings)
+    - [🌐 Proxy Settings](#-proxy-settings)
+  - [🛡️ Best Practices \& Security](#️-best-practices--security)
+  - [🖥️ Cross-Platform Notes](#️-cross-platform-notes)
+  - [💡 Usage Examples](#-usage-examples)
+    - [🧩 Scenario Guide](#-scenario-guide)
+      - [Example 1: Basic SSH Password](#example-1-basic-ssh-password)
+      - [Example 2: Multi-server](#example-2-multi-server)
+      - [Example 3: Changed Files Only](#example-3-changed-files-only)
+      - [Example 4: Artifacts Integration](#example-4-artifacts-integration)
+      - [Example 5: Windows Server](#example-5-windows-server)
+  - [🗝️ SSH Key Setup](#️-ssh-key-setup)
+  - [🧰 Common Error Codes](#-common-error-codes)
+  - [🔄 Workflow Diagram](#-workflow-diagram)
+  - [FAQ \& Troubleshooting](#faq--troubleshooting)
+  - [📝 License](#-license)
+
+---
+
+## 🚀 Quick Start
+
+Copy files and artifacts via SSH in your GitHub Actions workflow:
 
 ```yaml
 name: scp files
 on: [push]
 jobs:
   build:
-    name: Build
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: copy file via ssh password
+      - name: Copy files via SSH
         uses: appleboy/scp-action@v0.1.7
         with:
           host: ${{ secrets.HOST }}
@@ -30,121 +70,105 @@ jobs:
           target: your_server_target_folder_path
 ```
 
-## Input variables
+---
 
-See the [action.yml](./action.yml) file for more detail information.
+## ⚙️ Configuration
 
-| Variable            | Description                                                                                                                 | Default Value |
-| ------------------- | --------------------------------------------------------------------------------------------------------------------------- | ------------- |
-| host                | Remote host address for SCP (e.g., example.com or 192.168.1.1).                                                             | -             |
-| port                | Remote SSH port for SCP. Default: 22.                                                                                       | 22            |
-| username            | Username for SSH authentication.                                                                                            | -             |
-| password            | Password for SSH authentication (not recommended; use SSH keys if possible).                                                | -             |
-| protocol            | IP protocol to use. Valid values: 'tcp', 'tcp4', or 'tcp6'. Default: tcp.                                                   | tcp           |
-| timeout             | Timeout for establishing SSH connection to the remote host. Default: 30s.                                                   | 30s           |
-| command_timeout     | Timeout for the SCP command execution. Default: 10m.                                                                        | 10m           |
-| key                 | Content of the SSH private key (e.g., the raw content of ~/.ssh/id_rsa).                                                    | -             |
-| key_path            | Path to the SSH private key file.                                                                                           | -             |
-| passphrase          | Passphrase for the SSH private key, if required.                                                                            | -             |
-| fingerprint         | SHA256 fingerprint of the host's public key. If not set, host key verification is skipped (not recommended for production). | -             |
-| use_insecure_cipher | Enable additional, less secure ciphers for compatibility. Not recommended unless required.                                  | -             |
-| target              | Target directory path on the remote server. Must be a directory.                                                            | -             |
-| source              | List of files or directories to transfer (local paths).                                                                     | -             |
-| rm                  | Remove the target directory on the server before uploading new data.                                                        | -             |
-| debug               | Enable debug messages for troubleshooting.                                                                                  | -             |
-| strip_components    | Remove the specified number of leading path elements when extracting files.                                                 | -             |
-| overwrite           | Use the --overwrite flag with tar to overwrite existing files.                                                              | -             |
-| tar_dereference     | Use the --dereference flag with tar to follow symlinks.                                                                     | -             |
-| tar_tmp_path        | Temporary path for the tar file on the destination host.                                                                    | -             |
-| tar_exec            | Path to the tar executable on the destination host. Default: tar.                                                           | tar           |
-| curl_insecure       | When true, uses the --insecure option with curl for insecure downloads.                                                     | false         |
-| capture_stdout      | When true, captures and returns standard output from the commands as action output.                                         | false         |
-| version             | The version of drone-scp to use.                                                                                            | -             |
+### 🔌 Connection Settings
 
-SSH Proxy Setting:
+| Variable        | Description                                  | Default | Required |
+| --------------- | -------------------------------------------- | ------- | -------- |
+| host            | Remote host(s), comma-separated for multiple | -       | ✓        |
+| port            | SSH port                                     | 22      |          |
+| username        | SSH username                                 | -       | ✓        |
+| password        | SSH password (prefer SSH key for security)   | -       |          |
+| key             | SSH private key content                      | -       |          |
+| key_path        | Path to SSH private key file                 | -       |          |
+| passphrase      | Passphrase for SSH private key               | -       |          |
+| fingerprint     | SHA256 fingerprint for host key verification | -       |          |
+| protocol        | IP protocol: 'tcp', 'tcp4', or 'tcp6'        | tcp     |          |
+| timeout         | SSH connection timeout                       | 30s     |          |
+| command_timeout | SCP command timeout                          | 10m     |          |
 
-| Variable                  | Description                                                                                                                       | Default Value |
-| ------------------------- | --------------------------------------------------------------------------------------------------------------------------------- | ------------- |
-| proxy_host                | Remote host address for SSH proxy.                                                                                                | -             |
-| proxy_port                | SSH proxy port. Default: 22.                                                                                                      | 22            |
-| proxy_username            | Username for SSH proxy authentication.                                                                                            | -             |
-| proxy_password            | Password for SSH proxy authentication.                                                                                            | -             |
-| proxy_passphrase          | Passphrase for the SSH proxy private key, if required.                                                                            | -             |
-| proxy_timeout             | Timeout for establishing SSH connection to the proxy host. Default: 30s.                                                          | 30s           |
-| proxy_key                 | Content of the SSH proxy private key (e.g., the raw content of ~/.ssh/id_rsa).                                                    | -             |
-| proxy_key_path            | Path to the SSH proxy private key file.                                                                                           | -             |
-| proxy_fingerprint         | SHA256 fingerprint of the proxy host's public key. If not set, host key verification is skipped (not recommended for production). | -             |
-| proxy_use_insecure_cipher | Enable additional, less secure ciphers for the proxy connection. Not recommended unless required.                                 | -             |
+### 📁 File Transfer Settings
 
-## Setting up a SSH Key
+| Variable         | Description                                             | Default | Security Note          |
+| ---------------- | ------------------------------------------------------- | ------- | ---------------------- |
+| source           | Local files/directories to transfer (comma-separated)   | -       | Use explicit paths     |
+| target           | Target directory on remote server (must be a directory) | -       | Avoid root directories |
+| rm               | Remove target directory before upload                   | -       | Use with caution       |
+| strip_components | Remove leading path elements when extracting            | -       |                        |
+| overwrite        | Overwrite existing files with tar                       | -       |                        |
+| tar_dereference  | Follow symlinks with tar                                | -       |                        |
+| tar_tmp_path     | Temp path for tar file on destination                   | -       |                        |
+| tar_exec         | Path to tar executable on destination                   | tar     |                        |
+| debug            | Enable debug output                                     | -       |                        |
+| curl_insecure    | Use --insecure with curl                                | false   | Not recommended        |
+| capture_stdout   | Capture command stdout as action output                 | false   |                        |
+| version          | Version of drone-scp to use                             | -       |                        |
 
-Make sure to follow the steps below when creating and using SSH keys.
-The best practice is to create the SSH keys on the local machine, not the remote machine.
-Log in with the username specified in GitHub Secrets and generate an RSA key pair:
+### 🌐 Proxy Settings
 
-```bash
-# rsa
-ssh-keygen -t rsa -b 4096 -C "your_email@example.com"
+| Variable                  | Description                          | Default | Required |
+| ------------------------- | ------------------------------------ | ------- | -------- |
+| proxy_host                | SSH proxy host                       | -       |          |
+| proxy_port                | SSH proxy port                       | 22      |          |
+| proxy_username            | SSH proxy username                   | -       |          |
+| proxy_password            | SSH proxy password                   | -       |          |
+| proxy_key                 | SSH proxy private key content        | -       |          |
+| proxy_key_path            | Path to SSH proxy private key file   | -       |          |
+| proxy_passphrase          | Passphrase for SSH proxy private key | -       |          |
+| proxy_fingerprint         | SHA256 fingerprint for proxy host    | -       |          |
+| proxy_use_insecure_cipher | Enable less secure ciphers for proxy | -       |          |
+| proxy_timeout             | SSH proxy connection timeout         | 30s     |          |
 
-# ed25519
-ssh-keygen -t ed25519 -a 200 -C "your_email@example.com"
-```
+---
 
-Add newly generated key into Authorized keys. Read more about authorized keys [here](https://www.ssh.com/ssh/authorized_keys/).
+## 🛡️ Best Practices & Security
 
-```bash
-# rsa
-cat .ssh/id_rsa.pub | ssh b@B 'cat >> .ssh/authorized_keys'
+- **Prefer SSH key authentication** over passwords for better security.
+- Store all sensitive values (host, username, password, key) in **GitHub Secrets**.
+- Regularly **rotate deployment keys** (suggested every 90 days).
+- Restrict write permissions on the target server directory.
+- Enable host key fingerprint verification to prevent MITM attacks.
+- Avoid using root as the SSH user.
 
-# d25519
-cat .ssh/id_ed25519.pub | ssh b@B 'cat >> .ssh/authorized_keys'
-```
+---
 
-Copy Private Key content and paste in Github Secrets.
+## 🖥️ Cross-Platform Notes
 
-```bash
-# rsa
-clip < ~/.ssh/id_rsa
+| Scenario         | Linux Server   | Windows Server          |
+| ---------------- | -------------- | ----------------------- |
+| Path Format      | `/path/to/dir` | `/c/path/to/dir`        |
+| Required Setting | None           | `tar_dereference: true` |
+| Permissions      | Preserved      | May require manual ACL  |
+| Shell            | bash (default) | Git Bash via OpenSSH    |
 
-# ed25519
-clip < ~/.ssh/id_ed25519
-```
+> 🚩 **Important:**  
+> When copying to Windows servers:
+>
+> - Install Git for Windows and set OpenSSH default shell to Git Bash
+> - Use Unix-style target paths (e.g., `/c/Users/...`)
+> - Enable `tar_dereference` for symlink handling
 
-See the detail information about [SSH login without password](http://www.linuxproblem.org/art_9.html).
+---
 
-**A note** from one of our readers: Depending on your version of SSH you might also have to do the following changes:
+## 💡 Usage Examples
 
-- Put the public key in `.ssh/authorized_keys2`
-- Change the permissions of `.ssh` to 700
-- Change the permissions of `.ssh/authorized_keys2` to 640
+### 🧩 Scenario Guide
 
-### If you are using OpenSSH
+- **Basic file transfer** → [Example 1](#example-1-basic-ssh-password)
+- **Multi-server deployment** → [Example 2](#example-2-multi-server)
+- **Incremental/changed files only** → [Example 3](#example-3-changed-files-only)
+- **Artifacts integration** → [Example 4](#example-4-artifacts-integration)
+- **Windows server setup** → [Example 5](#example-5-windows-server)
 
-If you are currently using OpenSSH and are getting the following error:
+---
 
-```bash
-ssh: handshake failed: ssh: unable to authenticate, attempted methods [none publickey]
-```
-
-Make sure that your key algorithm of choice is supported.
-On Ubuntu 20.04 or later you must explicitly allow the use of the ssh-rsa algorithm. Add the following line to your OpenSSH daemon file (which is either `/etc/ssh/sshd_config` or a drop-in file under `/etc/ssh/sshd_config.d/`):
-
-```bash
-CASignatureAlgorithms +ssh-rsa
-```
-
-Alternatively, `ed25519` keys are accepted by default in OpenSSH. You could use this instead of rsa if needed:
-
-```bash
-ssh-keygen -t ed25519 -a 200 -C "your_email@example.com"
-```
-
-## Example
-
-Copy file via a SSH password:
+#### Example 1: Basic SSH Password
 
 ```yaml
-- name: copy file via ssh password
+- name: Copy file via SSH password
   uses: appleboy/scp-action@v0.1.7
   with:
     host: example.com
@@ -155,55 +179,13 @@ Copy file via a SSH password:
     target: your_server_target_folder_path
 ```
 
-Using the environment variables
+#### Example 2: Multi-server
 
 ```yaml
-- name: copy file via ssh password
+- name: Copy to multiple servers
   uses: appleboy/scp-action@v0.1.7
   with:
-    host: ${{ env.HOST }}
-    username: ${{ env.USERNAME }}
-    password: ${{ secrets.PASSWORD }}
-    port: ${{ env.PORT }}
-    source: "tests/a.txt,tests/b.txt"
-    target: ${{ env.TARGET_PATH }}
-```
-
-Copy file via a SSH key:
-
-```yaml
-- name: copy file via ssh key
-  uses: appleboy/scp-action@v0.1.7
-  with:
-    host: ${{ secrets.HOST }}
-    username: ${{ secrets.USERNAME }}
-    port: ${{ secrets.PORT }}
-    key: ${{ secrets.KEY }}
-    source: "tests/a.txt,tests/b.txt"
-    target: your_server_target_folder_path
-```
-
-Example configuration for ignore list:
-
-```yaml
-- name: copy file via ssh key
-  uses: appleboy/scp-action@v0.1.7
-  with:
-    host: ${{ secrets.HOST }}
-    username: ${{ secrets.USERNAME }}
-    port: ${{ secrets.PORT }}
-    key: ${{ secrets.KEY }}
-    source: "tests/*.txt,!tests/a.txt"
-    target: your_server_target_folder_path
-```
-
-Example configuration for multiple servers:
-
-```diff
-  uses: appleboy/scp-action@v0.1.7
-  with:
--   host: "example.com"
-+   host: "foo.com,bar.com"
+    host: "foo.com,bar.com"
     username: foo
     password: bar
     port: 22
@@ -211,155 +193,153 @@ Example configuration for multiple servers:
     target: your_server_target_folder_path
 ```
 
-Example configuration for exclude custom files:
+#### Example 3: Changed Files Only
 
 ```yaml
-  uses: appleboy/scp-action@v0.1.7
+- name: Get changed files
+  id: changed-files
+  uses: tj-actions/changed-files@v35
   with:
-    host: "example.com"
-    username: foo
-    password: bar
-    port: 22
--   source: "tests/*.txt"
-+   source: "tests/*.txt,!tests/a.txt,!tests/b.txt"
-    target: your_server_target_folder_path
-```
+    since_last_remote_commit: true
+    separator: ","
 
-Upload artifact files to remote server:
-
-```yaml
-deploy:
-  name: deploy artifact
-  runs-on: ubuntu-latest
-  steps:
-    - name: checkout
-      uses: actions/checkout@v4
-
-    - run: echo hello > world.txt
-
-    - uses: actions/upload-artifact@v4
-      with:
-        name: my-artifact
-        path: world.txt
-
-    - uses: actions/download-artifact@v4
-      with:
-        name: my-artifact
-        path: distfiles
-
-    - name: copy file to server
-      uses: appleboy/scp-action@v0.1.7
-      with:
-        host: ${{ secrets.HOST }}
-        username: ${{ secrets.USERNAME }}
-        key: ${{ secrets.KEY }}
-        port: ${{ secrets.PORT }}
-        source: distfiles/*
-        target: your_server_target_folder_path
-```
-
-Remove the specified number of leading path elements:
-
-```yaml
-- name: remove the specified number of leading path elements
+- name: Copy changed files to server
   uses: appleboy/scp-action@v0.1.7
   with:
     host: ${{ secrets.HOST }}
     username: ${{ secrets.USERNAME }}
     key: ${{ secrets.KEY }}
     port: ${{ secrets.PORT }}
-    source: "tests/a.txt,tests/b.txt"
+    source: ${{ steps.changed-files.outputs.all_changed_files }}
     target: your_server_target_folder_path
-    strip_components: 1
 ```
 
-Old target structure:
-
-```sh
-foobar
-  └── tests
-    ├── a.txt
-    └── b.txt
-```
-
-New target structure:
-
-```sh
-foobar
-  ├── a.txt
-  └── b.txt
-```
-
-Only copy files that are newer than the corresponding destination files:
+#### Example 4: Artifacts Integration
 
 ```yaml
-changes:
-  name: test changed-files
-  runs-on: ubuntu-latest
-  steps:
-    - name: checkout
-      uses: actions/checkout@v4
+- uses: actions/upload-artifact@v4
+  with:
+    name: my-artifact
+    path: world.txt
 
-    - name: Get changed files
-      id: changed-files
-      uses: tj-actions/changed-files@v35
-      with:
-        since_last_remote_commit: true
-        separator: ","
+- uses: actions/download-artifact@v4
+  with:
+    name: my-artifact
+    path: distfiles
 
-    - name: copy file to server
-      uses: appleboy/scp-action@v0.1.7
-      with:
-        host: ${{ secrets.HOST }}
-        username: ${{ secrets.USERNAME }}
-        key: ${{ secrets.KEY }}
-        port: ${{ secrets.PORT }}
-        source: ${{ steps.changed-files.outputs.all_changed_files }}
-        target: your_server_target_folder_path
+- name: Copy artifact to server
+  uses: appleboy/scp-action@v0.1.7
+  with:
+    host: ${{ secrets.HOST }}
+    username: ${{ secrets.USERNAME }}
+    key: ${{ secrets.KEY }}
+    port: ${{ secrets.PORT }}
+    source: distfiles/*
+    target: your_server_target_folder_path
 ```
 
-Protecting a Private Key. The purpose of the passphrase is usually to encrypt the private key. This makes the key file by itself useless to an attacker. It is not uncommon for files to leak from backups or decommissioned hardware, and hackers commonly exfiltrate files from compromised systems.
+#### Example 5: Windows Server
 
-```diff
-  - name: ssh key with passphrase
-    uses: appleboy/scp-action@v0.1.7
-    with:
-      host: ${{ secrets.HOST }}
-      username: ${{ secrets.USERNAME }}
-      key: ${{ secrets.SSH2 }}
-+     passphrase: ${{ secrets.PASSPHRASE }}
-      port: ${{ secrets.PORT }}
-      source: "tests/a.txt,tests/b.txt"
-      target: your_server_target_folder_path
+```yaml
+- name: Copy to Windows
+  uses: appleboy/scp-action@v0.1.7
+  with:
+    host: ${{ secrets.HOST }}
+    username: ${{ secrets.USERNAME }}
+    key: ${{ secrets.SSH_PRIVATE_KEY }}
+    port: 22
+    source: "your_source_path"
+    target: "/c/path/to/target/"
+    tar_dereference: true
+    rm: true
 ```
 
-When copying files from a Linux runner to a Windows server, you should:
+---
 
-1. Download git for Windows
-2. Change the default OpenSSH shell to git bach with the following powershell command.
-3. Set `tar_dereference` and `rm` variable to `true` in the YAML file
-4. Avoid putting the `port` value through a variable
-5. Convert the target path to a Unix path: `/c/path/to/target/`
+## 🗝️ SSH Key Setup
 
-Change the default OpenSSH shell to git bach with the following powershell command.
+1. **Generate SSH Key** (on your local machine):
 
-```powershell
-New-ItemProperty -Path "HKLM:\SOFTWARE\OpenSSH" -Name DefaultShell -Value "$env:Programfiles\Git\bin\bash.exe" -PropertyType String -Force
+   ```bash
+   # RSA
+   ssh-keygen -t rsa -b 4096 -C "your_email@example.com"
+   # ED25519
+   ssh-keygen -t ed25519 -a 200 -C "your_email@example.com"
+   ```
+
+2. **Add Public Key to Server**:
+
+   ```bash
+   cat .ssh/id_rsa.pub | ssh user@host 'cat >> .ssh/authorized_keys'
+   # or for ed25519
+   cat .ssh/id_ed25519.pub | ssh user@host 'cat >> .ssh/authorized_keys'
+   ```
+
+3. **Copy Private Key Content to GitHub Secrets**:
+
+   ```bash
+   clip < ~/.ssh/id_rsa
+   # or
+   clip < ~/.ssh/id_ed25519
+   ```
+
+> See [SSH login without password](http://www.linuxproblem.org/art_9.html) for more details.
+
+**OpenSSH Note:**  
+If you see `ssh: handshake failed: ssh: unable to authenticate, attempted methods [none publickey]`, ensure your key algorithm is supported.  
+On Ubuntu 20.04+, add to `/etc/ssh/sshd_config` or `/etc/ssh/sshd_config.d/`:
+
+```sh
+CASignatureAlgorithms +ssh-rsa
 ```
 
-Convert the target path to a Unix path: `/c/path/to/target/`
+Or use ed25519 keys, which are accepted by default.
 
-```diff
-  - name: Copy to Windows
-      uses: appleboy/scp-action@v0.1.7
-      with:
-        host: ${{ secrets.HOST }}
-        username: ${{ secrets.USERNAME }}
-        key: ${{ secrets.SSH_PRIVATE_KEY }}
-        port: 22
-        source: 'your_source_path'
--       target: 'C:\path\to\target'
-+       target: '/c/path/to/target/'
-+       tar_dereference: true
-+       rm: true
+---
+
+## 🧰 Common Error Codes
+
+| Error Code     | Possible Cause               | Solution                                      |
+| -------------- | ---------------------------- | --------------------------------------------- |
+| `ECONNREFUSED` | Wrong port / firewall blocks | Check port and firewall settings              |
+| `ENOENT`       | Source file not found        | Use absolute path or check checkout step      |
+| `EAUTH`        | Authentication failed        | Check key format and permissions (PEM format) |
+
+---
+
+## 🔄 Workflow Diagram
+
+```mermaid
+sequenceDiagram
+    participant G as GitHub Runner
+    participant S as Target Server
+    G->>S: Establish SSH connection
+    S-->>G: Authenticate credentials
+    G->>S: (Optional) Remove target directory
+    G->>G: Archive source files
+    G->>S: Transfer archive
+    S->>S: Extract and process files
+    S-->>G: Return result
 ```
+
+---
+
+## FAQ & Troubleshooting
+
+- **Q: Why does authentication fail?**  
+  A: Check SSH key format, permissions, and that the key is added to the server.
+
+- **Q: How do I copy only changed files?**  
+  A: Use `tj-actions/changed-files` to get changed files and pass to `source`.
+
+- **Q: How to deploy to multiple servers?**  
+  A: Use comma-separated host list: `host: "foo.com,bar.com"`
+
+- **Q: How to copy to Windows?**  
+  A: Set up Git Bash, use Unix-style paths, and enable `tar_dereference`.
+
+---
+
+## 📝 License
+
+MIT License
