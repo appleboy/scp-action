@@ -4,6 +4,7 @@
 
 [GitHub Action](https://github.com/features/actions) for copying files and artifacts via SSH.
 
+[![v1 version](https://github.com/appleboy/scp-action/actions/workflows/stable.yml/badge.svg)](https://github.com/appleboy/scp-action/actions/workflows/stable.yml)
 [![lint and test](https://github.com/appleboy/scp-action/actions/workflows/testing.yml/badge.svg)](https://github.com/appleboy/scp-action/actions/workflows/testing.yml)
 
 > **Note:** Only supports **Linux** [docker](https://www.docker.com/) containers.
