@@ -1,76 +1,76 @@
 name: "SCP Command to Transfer Files"
-description: "How to Use SCP Command to Transfer Files/Folders in Linux"
+description: "Easily transfer files and folders using the SCP command in Linux."
 author: "Bo-Yi Wu"
 inputs:
   host:
-    description: "scp remote host"
+    description: "Remote host address for SCP (e.g., example.com or 192.168.1.1)."
   port:
-    description: "scp remote port"
+    description: "Remote SSH port for SCP. Default: 22."
     default: "22"
   username:
-    description: "scp username"
+    description: "Username for SSH authentication."
   password:
-    description: "scp password"
+    description: "Password for SSH authentication (not recommended; use SSH keys if possible)."
   protocol:
-    description: "The IP protocol to use. Valid values are 'tcp'. 'tcp4' or 'tcp6'. Default to tcp."
+    description: "IP protocol to use. Valid values: 'tcp', 'tcp4', or 'tcp6'. Default: tcp."
     default: "tcp"
   timeout:
-    description: "timeout for ssh to remote host"
+    description: "Timeout for establishing SSH connection to the remote host. Default: 30s."
     default: "30s"
   command_timeout:
-    description: "timeout for scp command"
+    description: "Timeout for the SCP command execution. Default: 10m."
     default: "10m"
   key:
-    description: "content of ssh private key. ex raw content of ~/.ssh/id_rsa"
+    description: "Content of the SSH private key (e.g., the raw content of ~/.ssh/id_rsa)."
   key_path:
-    description: "path of ssh private key"
+    description: "Path to the SSH private key file."
   passphrase:
-    description: "ssh key passphrase"
+    description: "Passphrase for the SSH private key, if required."
   fingerprint:
-    description: "fingerprint SHA256 of the host public key, default is to skip verification"
+    description: "SHA256 fingerprint of the host's public key. If not set, host key verification is skipped (not recommended for production)."
   use_insecure_cipher:
-    description: "include more ciphers with use_insecure_cipher"
+    description: "Enable additional, less secure ciphers for compatibility. Not recommended unless required."
   target:
-    description: "target path on the server, must be a directory path."
+    description: "Target directory path on the remote server. Must be a directory."
   source:
-    description: "scp file list"
+    description: "List of files or directories to transfer (local paths)."
   rm:
-    description: "remove target folder before upload data"
+    description: "Remove the target directory on the server before uploading new data."
   debug:
-    description: "enable debug message"
+    description: "Enable debug messages for troubleshooting."
   strip_components:
-    description: "remove the specified number of leading path elements"
+    description: "Remove the specified number of leading path elements when extracting files."
   overwrite:
-    description: "use --overwrite flag with tar"
+    description: "Use the --overwrite flag with tar to overwrite existing files."
   tar_dereference:
-    description: "use --dereference flag with tar"
+    description: "Use the --dereference flag with tar to follow symlinks."
   tar_tmp_path:
-    description: "temporary path for tar file on the dest host"
+    description: "Temporary path for the tar file on the destination host."
   tar_exec:
-    description: "temporary path for tar file on the dest host"
+    description: "Path to the tar executable on the destination host. Default: tar."
     default: "tar"
   proxy_host:
-    description: "ssh proxy remote host"
+    description: "Remote host address for SSH proxy."
   proxy_port:
-    description: "ssh proxy remote port"
+    description: "SSH proxy port. Default: 22."
     default: "22"
   proxy_username:
-    description: "ssh proxy username"
+    description: "Username for SSH proxy authentication."
   proxy_password:
-    description: "ssh proxy password"
+    description: "Password for SSH proxy authentication."
   proxy_passphrase:
-    description: "ssh proxy key passphrase"
+    description: "Passphrase for the SSH proxy private key, if required."
   proxy_timeout:
-    description: "timeout for ssh to proxy host"
+    description: "Timeout for establishing SSH connection to the proxy host. Default: 30s."
     default: "30s"
   proxy_key:
-    description: "content of ssh proxy private key. ex raw content of ~/.ssh/id_rsa"
+    description: "Content of the SSH proxy private key (e.g., the raw content of ~/.ssh/id_rsa)."
   proxy_key_path:
-    description: "path of ssh proxy private key"
+    description: "Path to the SSH proxy private key file."
   proxy_fingerprint:
-    description: "fingerprint SHA256 of the host public key, default is to skip verification"
+    description: "SHA256 fingerprint of the proxy host's public key. If not set, host key verification is skipped (not recommended for production)."
   proxy_use_insecure_cipher:
-    description: "include more ciphers with use_insecure_cipher"
+    description: "Enable additional, less secure ciphers for the proxy connection. Not recommended unless required."
   curl_insecure:
     description: "When true, uses the --insecure option with curl for insecure downloads."
     default: "false"
