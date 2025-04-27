@@ -34,44 +34,47 @@ jobs:
 
 See the [action.yml](./action.yml) file for more detail information.
 
-| Variable            | Description                                                                                                 | Default Value |
-| ------------------- | ----------------------------------------------------------------------------------------------------------- | ------------- |
-| host                | SCP remote host                                                                                             | -             |
-| port                | SCP remote port                                                                                             | `22`          |
-| username            | SCP username                                                                                                | -             |
-| password            | SCP password                                                                                                | -             |
-| passphrase          | The passphrase is usually used to encrypt the private key                                                   | -             |
-| protocol            | The IP protocol to use. Valid values are `tcp`, `tcp4`, or `tcp6`.                                          | `tcp`         |
-| fingerprint         | Fingerprint SHA256 of the host public key. Default is to skip verification                                  | -             |
-| timeout             | Timeout for SSH to remote host                                                                              | `30s`         |
-| command_timeout     | Timeout for SCP command                                                                                     | `10m`         |
-| key                 | Content of SSH private key. e.g., raw content of ~/.ssh/id_rsa                                              | -             |
-| key_path            | Path of SSH private key                                                                                     | -             |
-| target              | Target path on the server, must be a directory (**required**)                                               | -             |
-| source              | SCP file list (**required**)                                                                                | -             |
-| rm                  | Remove target folder before uploading data                                                                  | `false`       |
-| strip_components    | Remove the specified number of leading path elements                                                        | -             |
-| overwrite           | Use `--overwrite` flag with tar, overwrite existing files when extracting                                   | -             |
-| tar_tmp_path        | Temporary path for tar file on the destination host                                                         | -             |
-| tar_exec            | Path to tar executable on the destination host                                                              | `tar`         |
-| tar_dereference     | Use `--dereference` flag with tar, follow symlinks; archive and dump the files they point to                | -             |
-| use_insecure_cipher | Include more ciphers with use_insecure_cipher (see [#15](https://github.com/appleboy/scp-action/issues/15)) | -             |
+| Variable            | Description                                                                                                                 | Default Value |
+| ------------------- | --------------------------------------------------------------------------------------------------------------------------- | ------------- |
+| host                | Remote host address for SCP (e.g., example.com or 192.168.1.1).                                                             | -             |
+| port                | Remote SSH port for SCP. Default: 22.                                                                                       | 22            |
+| username            | Username for SSH authentication.                                                                                            | -             |
+| password            | Password for SSH authentication (not recommended; use SSH keys if possible).                                                | -             |
+| protocol            | IP protocol to use. Valid values: 'tcp', 'tcp4', or 'tcp6'. Default: tcp.                                                   | tcp           |
+| timeout             | Timeout for establishing SSH connection to the remote host. Default: 30s.                                                   | 30s           |
+| command_timeout     | Timeout for the SCP command execution. Default: 10m.                                                                        | 10m           |
+| key                 | Content of the SSH private key (e.g., the raw content of ~/.ssh/id_rsa).                                                    | -             |
+| key_path            | Path to the SSH private key file.                                                                                           | -             |
+| passphrase          | Passphrase for the SSH private key, if required.                                                                            | -             |
+| fingerprint         | SHA256 fingerprint of the host's public key. If not set, host key verification is skipped (not recommended for production). | -             |
+| use_insecure_cipher | Enable additional, less secure ciphers for compatibility. Not recommended unless required.                                  | -             |
+| target              | Target directory path on the remote server. Must be a directory.                                                            | -             |
+| source              | List of files or directories to transfer (local paths).                                                                     | -             |
+| rm                  | Remove the target directory on the server before uploading new data.                                                        | -             |
+| debug               | Enable debug messages for troubleshooting.                                                                                  | -             |
+| strip_components    | Remove the specified number of leading path elements when extracting files.                                                 | -             |
+| overwrite           | Use the --overwrite flag with tar to overwrite existing files.                                                              | -             |
+| tar_dereference     | Use the --dereference flag with tar to follow symlinks.                                                                     | -             |
+| tar_tmp_path        | Temporary path for the tar file on the destination host.                                                                    | -             |
+| tar_exec            | Path to the tar executable on the destination host. Default: tar.                                                           | tar           |
+| curl_insecure       | When true, uses the --insecure option with curl for insecure downloads.                                                     | false         |
+| capture_stdout      | When true, captures and returns standard output from the commands as action output.                                         | false         |
+| version             | The version of drone-scp to use.                                                                                            | -             |
 
 SSH Proxy Setting:
 
-| Variable                  | Description                                                                                                 | Default Value |
-| ------------------------- | ----------------------------------------------------------------------------------------------------------- | ------------- |
-| proxy_host                | Proxy host                                                                                                  | -             |
-| proxy_port                | Proxy port                                                                                                  | `22`          |
-| proxy_username            | Proxy username                                                                                              | -             |
-| proxy_password            | Proxy password                                                                                              | -             |
-| proxy_protocol            | The IP protocol to use. Valid values are `tcp`, `tcp4`, or `tcp6`.                                          | `tcp`         |
-| proxy_passphrase          | The passphrase is usually used to encrypt the private key                                                   | -             |
-| proxy_timeout             | Timeout for SSH to proxy host                                                                               | `30s`         |
-| proxy_key                 | Content of SSH proxy private key                                                                            | -             |
-| proxy_key_path            | Path of SSH proxy private key                                                                               | -             |
-| proxy_fingerprint         | Fingerprint SHA256 of the host public key. Default is to skip verification                                  | -             |
-| proxy_use_insecure_cipher | Include more ciphers with use_insecure_cipher (see [#15](https://github.com/appleboy/scp-action/issues/15)) | -             |
+| Variable                  | Description                                                                                                                       | Default Value |
+| ------------------------- | --------------------------------------------------------------------------------------------------------------------------------- | ------------- |
+| proxy_host                | Remote host address for SSH proxy.                                                                                                | -             |
+| proxy_port                | SSH proxy port. Default: 22.                                                                                                      | 22            |
+| proxy_username            | Username for SSH proxy authentication.                                                                                            | -             |
+| proxy_password            | Password for SSH proxy authentication.                                                                                            | -             |
+| proxy_passphrase          | Passphrase for the SSH proxy private key, if required.                                                                            | -             |
+| proxy_timeout             | Timeout for establishing SSH connection to the proxy host. Default: 30s.                                                          | 30s           |
+| proxy_key                 | Content of the SSH proxy private key (e.g., the raw content of ~/.ssh/id_rsa).                                                    | -             |
+| proxy_key_path            | Path to the SSH proxy private key file.                                                                                           | -             |
+| proxy_fingerprint         | SHA256 fingerprint of the proxy host's public key. If not set, host key verification is skipped (not recommended for production). | -             |
+| proxy_use_insecure_cipher | Enable additional, less secure ciphers for the proxy connection. Not recommended unless required.                                 | -             |
 
 ## Setting up a SSH Key
 
