@@ -62,7 +62,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: 通过 SSH 复制文件
-        uses: appleboy/scp-action@v0.1.7
+        uses: appleboy/scp-action@v1
         with:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
@@ -171,7 +171,7 @@ jobs:
 
 ```yaml
 - name: 通过 SSH 密码复制文件
-  uses: appleboy/scp-action@v0.1.7
+  uses: appleboy/scp-action@v1
   with:
     host: example.com
     username: foo
@@ -185,7 +185,7 @@ jobs:
 
 ```yaml
 - name: 复制到多台服务器
-  uses: appleboy/scp-action@v0.1.7
+  uses: appleboy/scp-action@v1
   with:
     host: "foo.com,bar.com"
     username: foo
@@ -206,7 +206,7 @@ jobs:
     separator: ","
 
 - name: 复制变更文件到服务器
-  uses: appleboy/scp-action@v0.1.7
+  uses: appleboy/scp-action@v1
   with:
     host: ${{ secrets.HOST }}
     username: ${{ secrets.USERNAME }}
@@ -230,7 +230,7 @@ jobs:
     path: distfiles
 
 - name: 复制 artifact 到服务器
-  uses: appleboy/scp-action@v0.1.7
+  uses: appleboy/scp-action@v1
   with:
     host: ${{ secrets.HOST }}
     username: ${{ secrets.USERNAME }}
@@ -244,7 +244,7 @@ jobs:
 
 ```yaml
 - name: 复制到 Windows
-  uses: appleboy/scp-action@v0.1.7
+  uses: appleboy/scp-action@v1
   with:
     host: ${{ secrets.HOST }}
     username: ${{ secrets.USERNAME }}
