@@ -1,4 +1,4 @@
-name: testing v1
+name: v1 version
 on: [push]
 jobs:
   testing:
