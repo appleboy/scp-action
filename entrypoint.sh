@@ -39,7 +39,10 @@ if [[ "${INPUT_CURL_INSECURE}" == 'true' ]]; then
   INSECURE_OPTION="--insecure"
 fi
 
-curl -fsSL --retry 5 --keepalive-time 2 ${INSECURE_OPTION} "${DOWNLOAD_URL_PREFIX}/${CLIENT_BINARY}" -o "${TARGET}"
+echo "detect client path: ${TARGET}"
+if [ ! -f "${TARGET}" ];then
+  curl -fsSL --retry 5 --keepalive-time 2 ${INSECURE_OPTION} "${DOWNLOAD_URL_PREFIX}/${CLIENT_BINARY}" -o "${TARGET}"
+fi
 chmod +x "${TARGET}"
 
 echo "======= CLI Version Information ======="
