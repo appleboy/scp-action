@@ -39,11 +39,11 @@ if [[ "${INPUT_CURL_INSECURE}" == 'true' ]]; then
   INSECURE_OPTION="--insecure"
 fi
 
-if [[ ! -f "${TARGET}" ]]; then
+if [[ ! -x "${TARGET}" ]]; then
   curl -fsSL --retry 5 --keepalive-time 2 ${INSECURE_OPTION} "${DOWNLOAD_URL_PREFIX}/${CLIENT_BINARY}" -o "${TARGET}"
   chmod +x "${TARGET}"
 else
-  echo "Binary ${CLIENT_BINARY} already exists, skipping download."
+  echo "Binary ${CLIENT_BINARY} already exists and is executable, skipping download."
 fi
 
 echo "======= CLI Version Information ======="
