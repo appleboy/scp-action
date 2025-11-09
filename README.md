@@ -98,6 +98,7 @@ jobs:
 | Variable         | Description                                             | Default | Security Note          |
 | ---------------- | ------------------------------------------------------- | ------- | ---------------------- |
 | source           | Local files/directories to transfer (comma-separated)   | -       | Use explicit paths     |
+| flatten          | Copy directory contents without parent folder structure | false   | Perfect for build dirs |
 | target           | Target directory on remote server (must be a directory) | -       | Avoid root directories |
 | rm               | Remove target directory before upload                   | -       | Use with caution       |
 | strip_components | Remove leading path elements when extracting            | -       |                        |
@@ -165,6 +166,7 @@ jobs:
 - **Incremental/changed files only** → [Example 3](#example-3-changed-files-only)
 - **Artifacts integration** → [Example 4](#example-4-artifacts-integration)
 - **Windows server setup** → [Example 5](#example-5-windows-server)
+- **Flatten directory structure (build outputs)** → [Example 6](#example-6-flatten-directory-structure)
 
 ---
 
@@ -257,6 +259,25 @@ jobs:
     rm: true
 ```
 
+#### Example 6: Flatten Directory Structure
+
+```yaml
+- name: Deploy build folder contents
+  uses: appleboy/scp-action@v1
+  with:
+    host: ${{ secrets.HOST }}
+    username: ${{ secrets.USERNAME }}
+    key: ${{ secrets.KEY }}
+    port: ${{ secrets.PORT }}
+    source: "build/*"
+    target: "/www/htdocs/production/"
+    flatten: true
+```
+
+**Result:**
+- ✅ Without `flatten`: `/www/htdocs/production/build/index.html`
+- ✅ With `flatten: true`: `/www/htdocs/production/index.html`
+
 ---
 
 ## 🗝️ SSH Key Setup
@@ -340,6 +361,12 @@ sequenceDiagram
 
 - **Q: How to copy to Windows?**  
   A: Set up Git Bash, use Unix-style paths, and enable `tar_dereference`.
+
+- **Q: How do I copy only folder contents without the parent folder?**  
+  A: Use `flatten: true`. This automatically handles directory structure flattening:
+  - `source: "build/*"` + `flatten: true` → copies contents directly to target
+  - `source: "dist/"` + `flatten: true` → copies contents without creating `dist/` subdirectory
+  - Perfect for deploying build outputs where you don't want the build folder name in the target path.
 
 ---
 

@@ -98,6 +98,7 @@ jobs:
 | 变量             | 说明                              | 默认值 | 安全性说明     |
 | ---------------- | --------------------------------- | ------ | -------------- |
 | source           | 本地要传输的文件/目录（逗号分隔） | -      | 请使用明确路径 |
+| flatten          | 仅复制目录内容，不包含父文件夹    | false  | 适用于构建目录 |
 | target           | 远程目标目录（必须为目录）        | -      | 避免使用根目录 |
 | rm               | 上传前移除目标目录                | -      | 谨慎使用       |
 | strip_components | 传输时移除前置路径元素            | -      |                |
@@ -165,6 +166,7 @@ jobs:
 - **仅传输变更文件** → [示例 3](#示例-3仅传输变更文件)
 - **集成 Artifacts** → [示例 4](#示例-4集成-artifacts)
 - **Windows 服务器设置** → [示例 5](#示例-5windows-服务器)
+- **扁平化目录结构（构建输出）** → [示例 6](#示例-6扁平化目录结构)
 
 ---
 
@@ -257,6 +259,25 @@ jobs:
     rm: true
 ```
 
+#### 示例 6：扁平化目录结构
+
+```yaml
+- name: 部署构建文件夹内容
+  uses: appleboy/scp-action@v1
+  with:
+    host: ${{ secrets.HOST }}
+    username: ${{ secrets.USERNAME }}
+    key: ${{ secrets.KEY }}
+    port: ${{ secrets.PORT }}
+    source: "build/*"
+    target: "/www/htdocs/production/"
+    flatten: true
+```
+
+**结果：**
+- ✅ 不使用 `flatten`：`/www/htdocs/production/build/index.html`
+- ✅ 使用 `flatten: true`：`/www/htdocs/production/index.html`
+
 ---
 
 ## 🗝️ SSH 密钥设置
@@ -340,6 +361,12 @@ sequenceDiagram
 
 - **Q: 如何复制到 Windows？**  
   A: 设置 Git Bash，使用类 Unix 路径，并启用 `tar_dereference`。
+
+- **Q: 如何只复制文件夹内容而不包含父文件夹？**  
+  A: 使用 `flatten: true`。这会自动处理目录结构扁平化：
+  - `source: "build/*"` + `flatten: true` → 直接将内容复制到目标目录
+  - `source: "dist/"` + `flatten: true` → 复制内容而不创建 `dist/` 子目录
+  - 非常适合部署构建输出，避免在目标路径中包含构建文件夹名称。
 
 ---
 

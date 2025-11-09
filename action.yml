@@ -49,6 +49,9 @@ inputs:
   tar_exec:
     description: "Path to the tar executable on the destination host. Default: tar."
     default: "tar"
+  flatten:
+    description: "Copy only directory contents without parent folder structure. Useful for deploying build outputs."
+    default: "false"
   proxy_host:
     description: "Remote host address for SSH proxy."
   proxy_port:
@@ -132,6 +135,7 @@ runs:
         INPUT_TAR_DEREFERENCE: ${{ inputs.tar_dereference }}
         INPUT_TAR_TMP_PATH: ${{ inputs.tar_tmp_path }}
         INPUT_TAR_EXEC: ${{ inputs.tar_exec }}
+        INPUT_FLATTEN: ${{ inputs.flatten }}
         INPUT_PROXY_TIMEOUT: ${{ inputs.proxy_timeout }}
         INPUT_CAPTURE_STDOUT: ${{ inputs.capture_stdout }}
         INPUT_CURL_INSECURE: ${{ inputs.curl_insecure }}

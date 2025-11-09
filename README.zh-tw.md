@@ -98,6 +98,7 @@ jobs:
 | 變數             | 說明                              | 預設值 | 安全性說明     |
 | ---------------- | --------------------------------- | ------ | -------------- |
 | source           | 本地要傳送的檔案/目錄（逗號分隔） | -      | 請使用明確路徑 |
+| flatten          | 僅複製目錄內容，不包含父資料夾    | false  | 適用於建置目錄 |
 | target           | 遠端目標目錄（必須為目錄）        | -      | 避免使用根目錄 |
 | rm               | 上傳前移除目標目錄                | -      | 請小心使用     |
 | strip_components | 傳送時移除前置路徑元素            | -      |                |
@@ -165,6 +166,7 @@ jobs:
 - **僅傳送變更檔案** → [範例 3](#範例-3僅傳送變更檔案)
 - **整合 Artifacts** → [範例 4](#範例-4整合-artifacts)
 - **Windows 伺服器設定** → [範例 5](#範例-5windows-伺服器)
+- **扁平化目錄結構（建置輸出）** → [範例 6](#範例-6扁平化目錄結構)
 
 ---
 
@@ -257,6 +259,25 @@ jobs:
     rm: true
 ```
 
+#### 範例 6：扁平化目錄結構
+
+```yaml
+- name: 部署建置資料夾內容
+  uses: appleboy/scp-action@v1
+  with:
+    host: ${{ secrets.HOST }}
+    username: ${{ secrets.USERNAME }}
+    key: ${{ secrets.KEY }}
+    port: ${{ secrets.PORT }}
+    source: "build/*"
+    target: "/www/htdocs/production/"
+    flatten: true
+```
+
+**結果：**
+- ✅ 不使用 `flatten`：`/www/htdocs/production/build/index.html`
+- ✅ 使用 `flatten: true`：`/www/htdocs/production/index.html`
+
 ---
 
 ## 🗝️ SSH 金鑰設定
@@ -340,6 +361,12 @@ sequenceDiagram
 
 - **Q: 如何複製到 Windows？**  
   A: 設定 Git Bash，使用 Unix 風格路徑，並啟用 `tar_dereference`。
+
+- **Q: 如何只複製資料夾內容而不包含父資料夾？**  
+  A: 使用 `flatten: true`。這會自動處理目錄結構扁平化：
+  - `source: "build/*"` + `flatten: true` → 直接將內容複製到目標目錄
+  - `source: "dist/"` + `flatten: true` → 複製內容而不建立 `dist/` 子目錄
+  - 非常適合部署建置輸出，避免在目標路徑中包含建置資料夾名稱。
 
 ---
 

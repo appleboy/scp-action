@@ -29,7 +29,45 @@ function detect_client_info() {
   esac
 }
 
+function process_flatten() {
+  # Only process if flatten is enabled and strip_components is not manually set
+  if [[ "${INPUT_FLATTEN}" == 'true' ]] && [[ -z "${INPUT_STRIP_COMPONENTS}" ]]; then
+    # Parse the source paths (comma-separated)
+    IFS=',' read -ra SOURCE_PATHS <<< "${INPUT_SOURCE}"
+    local max_depth=0
+    
+    for source_path in "${SOURCE_PATHS[@]}"; do
+      # Trim whitespace
+      source_path=$(echo "$source_path" | xargs)
+      
+      # Calculate directory depth (count slashes before wildcard or end)
+      if [[ "$source_path" == *"*"* ]]; then
+        # Has wildcard - count slashes before the *
+        local path_before_wildcard="${source_path%%\**}"
+        local depth=$(echo "$path_before_wildcard" | tr -cd '/' | wc -c)
+      else
+        # No wildcard - treat as directory, count all slashes
+        local depth=$(echo "$source_path" | sed 's:/*$::' | tr -cd '/' | wc -c)
+        # Add 1 to strip the directory itself
+        depth=$((depth + 1))
+      fi
+      
+      # Track maximum depth for multiple sources
+      if [[ $depth -gt $max_depth ]]; then
+        max_depth=$depth
+      fi
+    done
+    
+    # Set strip_components if we found paths to flatten
+    if [[ $max_depth -gt 0 ]]; then
+      export INPUT_STRIP_COMPONENTS="$max_depth"
+      echo "Flatten enabled: automatically setting strip_components=${max_depth}"
+    fi
+  fi
+}
+
 detect_client_info
+process_flatten
 DOWNLOAD_URL_PREFIX="${DRONE_SCP_RELEASE_URL}/v${DRONE_SCP_VERSION}"
 CLIENT_BINARY="drone-scp-${DRONE_SCP_VERSION}-${CLIENT_PLATFORM}-${CLIENT_ARCH}"
 TARGET="${GITHUB_ACTION_PATH}/${CLIENT_BINARY}"
