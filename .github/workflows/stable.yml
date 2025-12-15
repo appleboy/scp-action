@@ -76,7 +76,7 @@ jobs:
           name: my-artifact
           path: world.txt
 
-      - uses: actions/download-artifact@v5
+      - uses: actions/download-artifact@v7
         with:
           name: my-artifact
           path: distfiles
