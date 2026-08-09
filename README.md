@@ -100,7 +100,7 @@ jobs:
 | source           | Local files/directories to transfer (comma-separated)   | -       | Use explicit paths     |
 | target           | Target directory on remote server (must be a directory) | -       | Avoid root directories |
 | rm               | Remove target directory before upload                   | -       | Use with caution       |
-| strip_components | Remove leading path elements when extracting            | -       |                        |
+| strip_components | Remove leading path elements when extracting            | 0       | The amount of path components to strip from the source path |
 | overwrite        | Overwrite existing files with tar                       | -       |                        |
 | tar_dereference  | Follow symlinks with tar                                | -       |                        |
 | tar_tmp_path     | Temp path for tar file on destination                   | -       |                        |
