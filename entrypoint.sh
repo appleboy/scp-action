@@ -40,8 +40,12 @@ if [[ "${INPUT_CURL_INSECURE}" == 'true' ]]; then
 fi
 
 if [[ ! -x "${TARGET}" ]]; then
-  curl -fsSL --retry 5 --keepalive-time 2 ${INSECURE_OPTION} "${DOWNLOAD_URL_PREFIX}/${CLIENT_BINARY}" -o "${TARGET}"
-  chmod +x "${TARGET}"
+  # Publish complete downloads atomically so concurrent steps never execute a file being overwritten.
+  DOWNLOAD_TMP="$(mktemp "${TARGET}.tmp.XXXXXX")"
+  trap 'rm -f "${DOWNLOAD_TMP}"' EXIT
+  curl -fsSL --retry 5 --keepalive-time 2 ${INSECURE_OPTION} "${DOWNLOAD_URL_PREFIX}/${CLIENT_BINARY}" -o "${DOWNLOAD_TMP}"
+  chmod +x "${DOWNLOAD_TMP}"
+  mv -f "${DOWNLOAD_TMP}" "${TARGET}"
 else
   echo "Binary ${CLIENT_BINARY} already exists and is executable, skipping download."
 fi
